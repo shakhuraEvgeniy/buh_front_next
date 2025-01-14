@@ -10,3 +10,13 @@ export type Accounts = {
   accounts: Account[];
   sum: string;
 };
+
+export type CostAndIncome = {
+  id: number;
+  account: string;
+  sum: string;
+  category: string;
+  sub_category: string;
+  comment: string;
+  create_time: string;
+};

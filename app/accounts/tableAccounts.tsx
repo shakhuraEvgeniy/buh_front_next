@@ -1,4 +1,3 @@
-// import "@/app/ui/TableAccounts/TableAccounts.module.css";
 import { Accounts, Account } from "@/app/lib/definitions";
 import stayles from "@/app/ui/Table/Table.module.css";
 

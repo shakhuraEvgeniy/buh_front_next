@@ -1,8 +1,8 @@
 import React from "react";
-import { Cost } from '@/app/lib/definitions';
+import { CostAndIncome } from '@/app/lib/definitions';
 import stayles from "@/app/ui/Table/Table.module.css";
 
-const Table = ({ data }: { data: Cost[] }) => {
+const Table = ({ data }: { data: CostAndIncome[] }) => {
   const formatNumber = (number: number) => {
     return number.toLocaleString("ru-RU", {
       style: "currency",
@@ -22,7 +22,7 @@ const Table = ({ data }: { data: Cost[] }) => {
     }
     acc[date].push(item);
     return acc;
-  }, {} as Record<string, Cost[]>);
+  }, {} as Record<string, CostAndIncome[]>);
 
   return (
     <>
