@@ -1,4 +1,9 @@
 .main {
   display: flex;
-  /* background-color: #000; */
+}
+
+.main__darck {
+  display: flex;
+  background-color: #000;
+  color: #fff;
 }

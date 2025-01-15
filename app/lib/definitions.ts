@@ -20,3 +20,16 @@ export type CostAndIncome = {
   comment: string;
   create_time: string;
 };
+
+export type Category = {
+  id: number;
+  name: string;
+};
+
+export type SubCategories = {
+  id: number;
+  name: string;
+  category_id: number;
+};
+
+export type Item = "cost" | "income" | "account";

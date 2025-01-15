@@ -1,9 +1,21 @@
+"use client"
 import * as incomesApi from "@/app/utils/api/incomes";
 import Table from "@/app/ui/Table/Table";
+import { CostAndIncome } from "@/app/lib/definitions";
+import { useEffect, useState } from 'react';
 
-export default async function Incomes() {
+export default function Incomes() {
+  const [incomes, setIncomes] = useState<CostAndIncome[]>([]);
+  useEffect(() => { getIncomes() }, []);
 
-  const incomes = await incomesApi.getIncomesApi();
+  const getIncomes = async () => {
+    try {
+      const data = await incomesApi.getIncomesApi();
+      setIncomes(data);
+    } catch (e) {
+      console.log(e);
+    };
+  }
 
   return (
     <>

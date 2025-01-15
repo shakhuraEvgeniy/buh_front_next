@@ -1,3 +1,4 @@
+import { CostAndIncome } from '@/app/lib/definitions';
 import { MAIN_URL } from "../constants";
 
 const checkResponse = async (res: Response) => {
@@ -7,7 +8,7 @@ const checkResponse = async (res: Response) => {
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-export const getIncomesApi = async () => {
+export const getIncomesApi = async (): Promise<CostAndIncome[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/income/incomes?limit=100`, {
       method: "GET",
