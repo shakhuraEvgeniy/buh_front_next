@@ -20,10 +20,29 @@ export const getCostsApi = async (): Promise<CostAndIncome[]> => {
   }
 };
 
-export const addCostsApi = async () => {
+export const addCostsApi = async (
+  accountId: number,
+  createTime: Date,
+  sum: number,
+  categoryId: number,
+  subCategoryId: number,
+  comment: string
+) => {
   try {
-    const res = await fetch(`${MAIN_URL}/cost/costs?limit=100`, {
-      method: "GET",
+    const res = await fetch(`${MAIN_URL}/cost/cost`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        accountId,
+        createTime,
+        sum,
+        categoryId,
+        subCategoryId,
+        comment
+      }),
     });
     return await checkResponse(res);
   } catch (error) {

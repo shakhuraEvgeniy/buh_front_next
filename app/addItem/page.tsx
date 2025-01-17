@@ -1,13 +1,38 @@
 "use client"
-import * as costsApi from "@/app/utils/api/categorys";
-import { Category } from "@/app/lib/definitions";
+import * as categoryApi from "@/app/utils/api/categorys";
+import * as costsApi from "@/app/utils/api/costs";
+import * as accountsApi from "@/app/utils/api/accounts";
+import { Account, Category } from "@/app/lib/definitions";
 import { useEffect, useState } from 'react';
+import styles from "@/app/ui/addItemForm/addItemForm.module.css"
+import { useFormWithValidation } from "@/app/hooks/useFormWithValidation";
 
 export default function Costs() {
   const [categorys, setCategorys] = useState<Category[]>([]);
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
 
-  useEffect(() => { getCategiryCost() }, []);
+  const getCurrentDateTime = (): string => {
+    const now = new Date();
+    const offset = now.getTimezoneOffset();
+    const localDate = new Date(now.getTime() - (offset * 60 * 1000));
+    return localDate.toISOString()
+  }
+
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({
+    sum: 0,
+    comment: "",
+    categoryId: 1,
+    subCategoryId: 0,
+    accountId: 1,
+    createTime: getCurrentDateTime().slice(0, 10),
+  });
+
+  useEffect(() => {
+    getCategiryCost()
+    getAccounts()
+  }, []);
+
   useEffect(() => {
     if (categorys.length > 0) {
       getSubCategorysCost(categorys[0].id);
@@ -16,7 +41,7 @@ export default function Costs() {
 
   const getCategiryCost = async () => {
     try {
-      const cat = await costsApi.getCategorysCostApi();
+      const cat = await categoryApi.getCategorysCostApi();
       setCategorys(cat);
     } catch (e) {
       console.log(e);
@@ -25,60 +50,92 @@ export default function Costs() {
 
   const getSubCategorysCost = async (id: number) => {
     try {
-      const subCat = await costsApi.getSubCategorysCostApi(id);
+      const subCat = await categoryApi.getSubCategorysCostApi(id);
       setSubCategorys(subCat);
     } catch (e) {
       console.log(e);
     };
   }
 
-  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const getAccounts = async () => {
     try {
+      const accounts = await accountsApi.getAccountsApi();
+      setAccounts(accounts.accounts);
+      values.accountId = accounts.accounts[0].id;
+    } catch (e) {
+      console.log(e);
+    };
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const createTimeWithTime = new Date(`${values.createTime}T${getCurrentDateTime().slice(11,)}`);
+      const subCategoryId = values.subCategoryId ? values.subCategoryId : null;
+      await costsApi.addCostsApi(values.accountId, createTimeWithTime, Number(values.sum), values.categoryId, subCategoryId, values.comment);
+      resetForm()
+    } catch (e) {
+      console.log(e);
+    };
+  }
+
+  const handleChangeCategory = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    try {
+      handleChange(e);
       await getSubCategorysCost(Number(e.target.value));
     } catch (e) {
       console.log(e);
     };
   }
 
-
   return (
     <>
-      <form>
-        <label>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label className={styles.label}>
           Дата:
-          <input type="data" name='createTime' placeholder="Дата" />
+          <input type="date" name='createTime' placeholder="Дата" onChange={handleChange} value={values.createTime} required />
         </label>
-        <label>
+
+        <label className={styles.label}>
           Счет:
-          <input type="text" name='accountId' placeholder="Наименование" />
+          <select name='accountId' onChange={handleChange} required>
+            {accounts.map((account) => (
+              <option key={account.id} value={account.id}>{account.name}</option>
+            ))}
+          </select>
         </label>
-        <label>
+
+        <label className={styles.label}>
           Сумма:
-          <input type="text" name='sum' placeholder="Сумма" />
+          <input type="number" name='sum' placeholder="Сумма" onChange={handleChange} value={values.sum || ""} required />
         </label>
-        <label>
+
+        <label className={styles.label}>
           Категория:
-          <select name='categoryId' onChange={handleChange}>
+          <select name='categoryId' onChange={handleChangeCategory} value={values.categoryId} required >
             {categorys.map((category) => (
               <option key={category.id} value={category.id}>{category.name}</option>
             ))}
           </select>
         </label>
-        <label>
+
+        <label className={styles.label}>
           Подкатегория:
-          <select name='subCategoryId'>
+          <select name='subCategoryId' onChange={handleChange} required>
+            <option key={0} value={0}>Не выбрана</option>
             {subCategorys.map((subCategory) => (
               <option key={subCategory.id} value={subCategory.id}>{subCategory.name}</option>
             ))}
           </select>
         </label>
-        <label>
+
+        <label className={styles.label} >
           Комментарий:
-          <input type="text" name='comment' placeholder="Комментарий" />
+          <input type="text" name='comment' placeholder="Комментарий" value={values.comment || ""} onChange={handleChange} />
         </label>
 
-        <button>Добавить</button>
-        <button>Отменить</button>
+        <button className={styles['button']} type="submit">Добавить</button>
+        <button className={`${styles.button} ${styles['button__cansel']} `}>Отменить</button>
       </form>
     </>
   );

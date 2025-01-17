@@ -1,0 +1,44 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 300px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.label input,
+.label select {
+  padding: 3px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button {
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button__cansel {
+  background-color: #6c757d;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
