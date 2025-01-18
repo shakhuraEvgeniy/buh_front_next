@@ -1,6 +1,6 @@
 .menu {
   display: flex;
-  height: 100vh;
+
   flex-direction: column;
   max-width: 156px;
   margin-right: 20px;
