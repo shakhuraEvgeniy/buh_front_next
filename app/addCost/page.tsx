@@ -19,7 +19,7 @@ export default function Costs() {
     return localDate.toISOString()
   }
 
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({
+  const { values, handleChange, resetForm } = useFormWithValidation({
     sum: 0,
     comment: "",
     categoryId: 1,
@@ -31,13 +31,15 @@ export default function Costs() {
   useEffect(() => {
     getCategiryCost()
     getAccounts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (categorys.length > 0) {
-      getSubCategorysCost(categorys[0].id);
+    if (values.categoryId) {
+      getSubCategorysCost(values.categoryId);
     }
-  }, [categorys]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.categoryId]);
 
   const getCategiryCost = async () => {
     try {
@@ -52,6 +54,7 @@ export default function Costs() {
     try {
       const subCat = await categoryApi.getSubCategorysCostApi(id);
       setSubCategorys(subCat);
+      values.subCategoryId = 0
     } catch (e) {
       console.log(e);
     };
@@ -71,9 +74,17 @@ export default function Costs() {
     e.preventDefault();
     try {
       const createTimeWithTime = new Date(`${values.createTime}T${getCurrentDateTime().slice(11,)}`);
-      const subCategoryId = values.subCategoryId ? values.subCategoryId : null;
-      await costsApi.addCostsApi(values.accountId, createTimeWithTime, Number(values.sum), values.categoryId, subCategoryId, values.comment);
-      resetForm()
+      const subCategoryId = values.subCategoryId === 0 ? null : Number(values.subCategoryId);
+      await costsApi.addCostsApi(Number(values.accountId), createTimeWithTime, Number(values.sum), Number(values.categoryId), subCategoryId, values.comment);
+      resetForm({
+        sum: 0,
+        comment: "",
+        categoryId: values.categoryId,
+        subCategoryId: values.subCategoryId,
+        accountId: values.accountId,
+        createTime: getCurrentDateTime().slice(0, 10),
+      })
+
     } catch (e) {
       console.log(e);
     };
