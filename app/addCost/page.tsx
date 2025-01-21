@@ -14,9 +14,7 @@ export default function Costs() {
 
   const getCurrentDateTime = (): string => {
     const now = new Date();
-    const offset = now.getTimezoneOffset();
-    const localDate = new Date(now.getTime() - (offset * 60 * 1000));
-    return localDate.toISOString()
+    return now.toISOString()
   }
 
   const { values, handleChange, resetForm } = useFormWithValidation({
@@ -82,7 +80,7 @@ export default function Costs() {
         categoryId: values.categoryId,
         subCategoryId: values.subCategoryId,
         accountId: values.accountId,
-        createTime: getCurrentDateTime().slice(0, 10),
+        createTime: values.createTime,
       })
 
     } catch (e) {
