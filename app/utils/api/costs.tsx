@@ -25,7 +25,7 @@ export const addCostsApi = async (
   createTime: Date,
   sum: number,
   categoryId: number,
-  subCategoryId: number,
+  subCategoryId: number | null,
   comment: string
 ) => {
   try {
