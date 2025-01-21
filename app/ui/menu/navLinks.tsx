@@ -12,6 +12,7 @@ const links = [
   },
   { name: 'Доходы', href: '/incomes' },
   { name: 'Добавить расход', href: '/addCost' },
+  { name: 'Добавить доход', href: '/addIncome' }
 ];
 
 export default function NavLinks() {

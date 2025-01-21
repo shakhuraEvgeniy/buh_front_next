@@ -31,3 +31,27 @@ export const getSubCategorysCostApi = async (id: number): Promise<Category[]> =>
     throw error;
   }
 }
+
+export const getCategorysIncomeApi = async (): Promise<Category[]> => {
+  try {
+    const res = await fetch(`${MAIN_URL}/categoryIncome/categorys`, {
+      method: "GET",
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
+};
+
+export const getSubCategorysIncomeApi = async (id: number): Promise<Category[]> => {
+  try {
+    const res = await fetch(`${MAIN_URL}/categoryIncome/subCategorys?idCategory=${id}`, {
+      method: "GET",
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
+}

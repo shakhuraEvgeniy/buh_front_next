@@ -19,3 +19,34 @@ export const getIncomesApi = async (): Promise<CostAndIncome[]> => {
     throw error;
   }
 };
+
+export const addIncomeApi = async (
+  accountId: number,
+  createTime: Date,
+  sum: number,
+  categoryId: number,
+  subCategoryId: number | null,
+  comment: string
+) => {
+  try {
+    const res = await fetch(`${MAIN_URL}/income/addIncome`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        accountId,
+        createTime,
+        sum,
+        categoryId,
+        subCategoryId,
+        comment
+      }),
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error("Error fetching costs:", error);
+    throw error;
+  }
+};
