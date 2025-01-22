@@ -13,7 +13,7 @@ export default function AddCosts() {
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
 
-  const { values, handleChange, resetForm } = useFormWithValidation({
+  const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
     comment: "",
     categoryId: 1,
@@ -101,6 +101,8 @@ export default function AddCosts() {
       subCategorys={subCategorys}
       accounts={accounts}
       handleChange={handleChange}
-      values={values} />
+      values={values}
+      isValid={isValid}
+    />
   );
 }

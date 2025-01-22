@@ -16,10 +16,11 @@ interface FormAddCostAndIncomeProps {
     subCategoryId: number;
     accountId: number;
     createTime: string;
-  }
+  };
+  isValid: boolean
 }
 
-export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategory, categorys, subCategorys, accounts, handleChange, values }: FormAddCostAndIncomeProps) {
+export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategory, categorys, subCategorys, accounts, handleChange, values, isValid }: FormAddCostAndIncomeProps) {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -66,8 +67,8 @@ export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategor
           <input type="text" name='comment' placeholder="Комментарий" value={values.comment || ""} onChange={handleChange} />
         </label>
 
-        <button className={styles['button']} type="submit">Добавить</button>
-        <button className={`${styles.button} ${styles['button__cansel']} `}>Отменить</button>
+        <button className={`${styles['button']} ${isValid || styles["button_disabled"]}`} disabled={!isValid} type="submit">Добавить</button>
+        <button className={`${styles.button} ${styles['button_cansel']} `}>Отменить</button>
       </form>
     </>
   );
