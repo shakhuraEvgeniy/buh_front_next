@@ -31,7 +31,7 @@ export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategor
 
         <label className={styles.label}>
           Счет:
-          <select name='accountId' onChange={handleChange} required>
+          <select name='accountId' onChange={handleChange} value={values.accountId} required>
             {accounts.map((account) => (
               <option key={account.id} value={account.id}>{account.name}</option>
             ))}
@@ -54,7 +54,7 @@ export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategor
 
         <label className={styles.label}>
           Подкатегория:
-          <select name='subCategoryId' onChange={handleChange} required>
+          <select name='subCategoryId' onChange={handleChange} value={values.subCategoryId} required>
             <option key={0} value={0}>Не выбрана</option>
             {subCategorys.map((subCategory) => (
               <option key={subCategory.id} value={subCategory.id}>{subCategory.name}</option>
