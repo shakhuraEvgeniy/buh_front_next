@@ -22,8 +22,6 @@ export default function Transfer() {
     try {
       const accounts = await accountsApi.getAccountsApi();
       setAccounts(accounts.accounts);
-      // values.startIdAccount = accounts.accounts[0].id;
-      // values.finishIdAccount = accounts.accounts[1].id;
       console.log(values);
 
     } catch (e) {
