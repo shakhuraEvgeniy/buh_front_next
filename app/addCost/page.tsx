@@ -5,7 +5,7 @@ import * as accountsApi from "@/app/utils/api/accounts";
 import { Account, Category } from "@/app/lib/definitions";
 import { useEffect, useState } from 'react';
 import { useFormWithValidation } from "@/app/hooks/useFormWithValidation";
-import FormAddCostAndIncome from '../ui/form/form';
+import FormAddCostAndIncome from '../ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '../utils/getDate';
 
 export default function AddCosts() {
@@ -13,7 +13,7 @@ export default function AddCosts() {
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
 
-  const { values, handleChange, resetForm } = useFormWithValidation({
+  const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
     comment: "",
     categoryId: 1,
@@ -48,7 +48,6 @@ export default function AddCosts() {
     try {
       const subCat = await categoryApi.getSubCategorysCostApi(id);
       setSubCategorys(subCat);
-      values.subCategoryId = 0
     } catch (e) {
       console.log(e);
     };
@@ -58,7 +57,6 @@ export default function AddCosts() {
     try {
       const accounts = await accountsApi.getAccountsApi();
       setAccounts(accounts.accounts);
-      values.accountId = accounts.accounts[0].id;
     } catch (e) {
       console.log(e);
     };
@@ -101,6 +99,8 @@ export default function AddCosts() {
       subCategorys={subCategorys}
       accounts={accounts}
       handleChange={handleChange}
-      values={values} />
+      values={values}
+      isValid={isValid}
+    />
   );
 }

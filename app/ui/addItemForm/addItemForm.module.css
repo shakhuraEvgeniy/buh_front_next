@@ -35,10 +35,11 @@
   cursor: pointer;
 }
 
-.button__cansel {
+.button_cansel {
   background-color: #6c757d;
 }
 
-.button:hover {
-  background-color: #0056b3;
+.button_disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
 }

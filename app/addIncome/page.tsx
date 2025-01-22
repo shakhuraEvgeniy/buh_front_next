@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import FormAddCostAndIncome from '../ui/form/form';
+import FormAddCostAndIncome from '../ui/addItemForm/addItemForm';
 import { Account, Category } from '../lib/definitions';
 import * as accountsApi from "@/app/utils/api/accounts";
 import * as incomesApi from "@/app/utils/api/incomes";
@@ -15,7 +15,7 @@ export default function AddIncome() {
   const [categorys, setCategorys] = useState<Category[]>([]);
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
 
-  const { values, handleChange, resetForm } = useFormWithValidation({
+  const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
     comment: "",
     categoryId: 1,
@@ -41,7 +41,6 @@ export default function AddIncome() {
     try {
       const accounts = await accountsApi.getAccountsApi();
       setAccounts(accounts.accounts);
-      values.accountId = accounts.accounts[0].id;
     } catch (e) {
       console.log(e);
     };
@@ -60,7 +59,6 @@ export default function AddIncome() {
     try {
       const subCat = await categoryApi.getSubCategorysIncomeApi(id);
       setSubCategorys(subCat);
-      values.subCategoryId = 0
     } catch (e) {
       console.log(e);
     };
@@ -103,6 +101,7 @@ export default function AddIncome() {
       subCategorys={subCategorys}
       accounts={accounts}
       handleChange={handleChange}
-      values={values} />
+      values={values}
+      isValid={isValid} />
   );
 }
