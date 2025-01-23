@@ -3,6 +3,8 @@ import TableAccounts from './tableAccounts';
 import * as accountsApi from "@/app/utils/api/accounts";
 import { Accounts } from "@/app/lib/definitions";
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import stayles from "@/app/ui/Table/Table.module.css";
 
 export default function AccountsPage() {
 
@@ -22,7 +24,10 @@ export default function AccountsPage() {
 
   return (
     <>
-      {<TableAccounts data={accounts} />}
+      <Link className={stayles.link} href="/transfer">
+        <button className={stayles.addButton}>Перенос средств</button>
+      </Link>
+      <TableAccounts data={accounts} />
     </>
   );
 };

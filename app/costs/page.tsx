@@ -3,6 +3,8 @@ import * as costsApi from "@/app/utils/api/costs";
 import Table from "@/app/ui/Table/Table";
 import { CostAndIncome } from "@/app/lib/definitions";
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import stayles from "@/app/ui/Table/Table.module.css";
 
 export default function Costs() {
   const [costs, setCosts] = useState<CostAndIncome[]>([]);
@@ -19,7 +21,10 @@ export default function Costs() {
   }
   return (
     <>
-      {<Table data={costs} />}
+      <Link className={stayles.link} href="/addCost">
+        <button className={stayles.addButton}>Добавить расход</button>
+      </Link>
+      <Table data={costs} />
     </>
   );
 };

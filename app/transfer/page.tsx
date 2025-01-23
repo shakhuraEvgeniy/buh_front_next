@@ -4,8 +4,10 @@ import { Account } from '../lib/definitions';
 import { useFormWithValidation } from '../hooks/useFormWithValidation';
 import * as accountsApi from "@/app/utils/api/accounts";
 import styles from "@/app/ui/addItemForm/addItemForm.module.css"
+import { useRouter } from 'next/navigation';
 
 export default function Transfer() {
+  const router = useRouter();
   const [accounts, setAccounts] = useState<Account[]>([]);
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
@@ -43,9 +45,14 @@ export default function Transfer() {
     };
   }
 
+  const handleCancel = () => {
+    router.push('/accounts');
+  }
+
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.form}>
+      <h2 className={styles.title}>Перенос средств</h2>
+      <form onSubmit={handleSubmit}>
         <label className={styles.label}>
           Счет отправления:
           <select name='startIdAccount' onChange={handleChange} value={values.startIdAccount} required>
@@ -70,8 +77,8 @@ export default function Transfer() {
         </label>
 
         <button className={`${styles['button']} ${isValid || styles["button_disabled"]}`} disabled={!isValid} type="submit">Добавить</button>
-        <button className={`${styles.button} ${styles['button_cansel']} `}>Отменить</button>
-      </form>
-    </>
+        <button className={`${styles.button} ${styles['button_cansel']}`} onClick={handleCancel}>Закрыть</button>
+      </form >
+    </div>
   )
 }

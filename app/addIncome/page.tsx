@@ -7,10 +7,10 @@ import * as incomesApi from "@/app/utils/api/incomes";
 import * as categoryApi from "@/app/utils/api/categorys";
 import { useFormWithValidation } from '../hooks/useFormWithValidation';
 import { getCurrentDateTime } from '../utils/getDate';
-
-
+import { useRouter } from 'next/navigation';
 
 export default function AddIncome() {
+  const router = useRouter();
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [categorys, setCategorys] = useState<Category[]>([]);
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
@@ -93,6 +93,10 @@ export default function AddIncome() {
     };
   }
 
+  const handleCancel = () => {
+    router.push('/incomes');
+  }
+
   return (
     <FormAddCostAndIncome
       handleSubmit={handleSubmit}
@@ -101,7 +105,10 @@ export default function AddIncome() {
       subCategorys={subCategorys}
       accounts={accounts}
       handleChange={handleChange}
+      handleCancel={handleCancel}
       values={values}
-      isValid={isValid} />
+      isValid={isValid}
+      title='Добавить доход' />
+
   );
 }

@@ -7,8 +7,10 @@ import { useEffect, useState } from 'react';
 import { useFormWithValidation } from "@/app/hooks/useFormWithValidation";
 import FormAddCostAndIncome from '../ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '../utils/getDate';
+import { useRouter } from 'next/navigation';
 
 export default function AddCosts() {
+  const router = useRouter();
   const [categorys, setCategorys] = useState<Category[]>([]);
   const [subCategorys, setSubCategorys] = useState<Category[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
@@ -91,6 +93,10 @@ export default function AddCosts() {
     };
   }
 
+  const handleCancel = () => {
+    router.push('/costs');
+  }
+
   return (
     <FormAddCostAndIncome
       handleSubmit={handleSubmit}
@@ -99,8 +105,10 @@ export default function AddCosts() {
       subCategorys={subCategorys}
       accounts={accounts}
       handleChange={handleChange}
+      handleCancel={handleCancel}
       values={values}
       isValid={isValid}
+      title='Добавить расход'
     />
   );
 }

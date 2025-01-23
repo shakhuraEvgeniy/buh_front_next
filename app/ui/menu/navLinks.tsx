@@ -11,9 +11,6 @@ const links = [
     href: '/costs',
   },
   { name: 'Доходы', href: '/incomes' },
-  { name: 'Добавить расход', href: '/addCost' },
-  { name: 'Добавить доход', href: '/addIncome' },
-  { name: 'Перенос средств', href: '/transfer' }
 ];
 
 export default function NavLinks() {

@@ -17,13 +17,16 @@ interface FormAddCostAndIncomeProps {
     accountId: number;
     createTime: string;
   };
-  isValid: boolean
+  isValid: boolean;
+  title: string
+  handleCancel: () => void;
 }
 
-export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategory, categorys, subCategorys, accounts, handleChange, values, isValid }: FormAddCostAndIncomeProps) {
+export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategory, categorys, subCategorys, accounts, handleChange, handleCancel, values, isValid, title }: FormAddCostAndIncomeProps) {
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.form}>
+      <h2 className={styles.title}>{title}</h2>
+      <form onSubmit={handleSubmit}>
         <label className={styles.label}>
           Дата:
           <input type="date" name='createTime' placeholder="Дата" onChange={handleChange} value={values.createTime} required />
@@ -68,8 +71,8 @@ export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategor
         </label>
 
         <button className={`${styles['button']} ${isValid || styles["button_disabled"]}`} disabled={!isValid} type="submit">Добавить</button>
-        <button className={`${styles.button} ${styles['button_cansel']} `}>Отменить</button>
+        <button className={`${styles.button} ${styles['button_cansel']}`} onClick={handleCancel}>Закрыть</button>
       </form>
-    </>
+    </div>
   );
 }
