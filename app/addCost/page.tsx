@@ -50,6 +50,7 @@ export default function AddCosts() {
     try {
       const subCat = await categoryApi.getSubCategorysCostApi(id);
       setSubCategorys(subCat);
+      values.subCategoryId = 0;
     } catch (e) {
       console.log(e);
     };

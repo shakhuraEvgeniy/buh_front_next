@@ -59,6 +59,7 @@ export default function AddIncome() {
     try {
       const subCat = await categoryApi.getSubCategorysIncomeApi(id);
       setSubCategorys(subCat);
+      values.subCategoryId = 0;
     } catch (e) {
       console.log(e);
     };
