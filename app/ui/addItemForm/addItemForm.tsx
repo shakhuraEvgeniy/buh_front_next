@@ -40,7 +40,7 @@ export default function FormAddCostAndIncome({ handleSubmit, handleChangeCategor
 
         <label className={styles.label}>
           Сумма:
-          <input type="number" name='sum' placeholder="Сумма" onChange={handleChange} value={values.sum || ""} required />
+          <input type="number" name='sum' placeholder="Сумма" step="0.01" inputMode="decimal" min="0" onChange={handleChange} value={values.sum || ""} required />
         </label>
 
         <label className={styles.label}>
