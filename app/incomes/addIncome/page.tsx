@@ -1,12 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
-import FormAddCostAndIncome from '../ui/addItemForm/addItemForm';
-import { Account, Category } from '../lib/definitions';
+import FormAddCostAndIncome from '../../ui/addItemForm/addItemForm';
+import { Account, Category } from '../../lib/definitions';
 import * as accountsApi from "@/app/utils/api/accounts";
 import * as incomesApi from "@/app/utils/api/incomes";
 import * as categoryApi from "@/app/utils/api/categorys";
-import { useFormWithValidation } from '../hooks/useFormWithValidation';
-import { getCurrentDateTime } from '../utils/getDate';
+import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
+import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 
 export default function AddIncome() {

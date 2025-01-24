@@ -5,8 +5,8 @@ import * as accountsApi from "@/app/utils/api/accounts";
 import { Account, Category } from "@/app/lib/definitions";
 import { useEffect, useState } from 'react';
 import { useFormWithValidation } from "@/app/hooks/useFormWithValidation";
-import FormAddCostAndIncome from '../ui/addItemForm/addItemForm';
-import { getCurrentDateTime } from '../utils/getDate';
+import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
+import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 
 export default function AddCosts() {

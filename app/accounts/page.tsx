@@ -24,7 +24,7 @@ export default function AccountsPage() {
 
   return (
     <>
-      <Link className={stayles.link} href="/transfer">
+      <Link className={stayles.link} href="/accounts/transfer">
         <button className={stayles.addButton}>Перенос средств</button>
       </Link>
       <TableAccounts data={accounts} />

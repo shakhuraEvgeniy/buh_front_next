@@ -21,7 +21,7 @@ export default function Incomes() {
 
   return (
     <>
-      <Link className={stayles.link} href="/addIncome">
+      <Link className={stayles.link} href="/incomes/addIncome">
         <button className={stayles.addButton}>Добавить доход</button>
       </Link>
       <Table data={incomes} />

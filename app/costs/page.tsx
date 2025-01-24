@@ -21,7 +21,7 @@ export default function Costs() {
   }
   return (
     <>
-      <Link className={stayles.link} href="/addCost">
+      <Link className={stayles.link} href="/costs/addCost">
         <button className={stayles.addButton}>Добавить расход</button>
       </Link>
       <Table data={costs} />

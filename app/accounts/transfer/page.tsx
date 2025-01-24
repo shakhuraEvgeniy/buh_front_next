@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { Account } from '../lib/definitions';
-import { useFormWithValidation } from '../hooks/useFormWithValidation';
+import { Account } from '../../lib/definitions';
+import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import * as accountsApi from "@/app/utils/api/accounts";
 import styles from "@/app/ui/addItemForm/addItemForm.module.css"
 import { useRouter } from 'next/navigation';
