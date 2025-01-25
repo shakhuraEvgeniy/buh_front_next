@@ -32,4 +32,14 @@ export type SubCategories = {
   category_id: number;
 };
 
-export type Item = "cost" | "income" | "account";
+export type Item = 'cost' | 'income' | 'account';
+
+export type ItemReports = {
+  category: string;
+  sum: string;
+};
+
+export type Report = {
+  categorys: ItemReports[];
+  sum: string;
+};

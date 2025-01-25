@@ -1,5 +1,5 @@
-import { Accounts, Account } from "@/app/lib/definitions";
-import stayles from "@/app/ui/Table/Table.module.css";
+import { Accounts, Account } from '@/app/utils/definitions';
+import stayles from '@/app/ui/Table/Table.module.css';
 
 interface accountsProps {
   data: Accounts;
@@ -7,9 +7,9 @@ interface accountsProps {
 
 const TableAccounts = ({ data }: accountsProps) => {
   const formatNumber = (number: number) => {
-    return number.toLocaleString("ru-RU", {
-      style: "currency",
-      currency: "RUB",
+    return number.toLocaleString('ru-RU', {
+      style: 'currency',
+      currency: 'RUB',
     });
   };
 
@@ -17,7 +17,7 @@ const TableAccounts = ({ data }: accountsProps) => {
     <>
       <table className={stayles.table}>
         <thead>
-          <tr >
+          <tr>
             <th scope="col">Наименование</th>
             <th scope="col">Текущий баланс</th>
             <th scope="col">Комментарий</th>
@@ -28,8 +28,10 @@ const TableAccounts = ({ data }: accountsProps) => {
             data.accounts.map((item: Account) => {
               return (
                 <tr key={item.id}>
-                  <td >{item.name}</td>
-                  <td className={stayles.number}>{formatNumber(Number(item.current_sum))}</td>
+                  <td>{item.name}</td>
+                  <td className={stayles.number}>
+                    {formatNumber(Number(item.current_sum))}
+                  </td>
                   <td>{item.comment}</td>
                 </tr>
               );
@@ -41,7 +43,9 @@ const TableAccounts = ({ data }: accountsProps) => {
               <th scope="row" colSpan={1}>
                 Итого на всех счетах:
               </th>
-              <td className={stayles.number}>{formatNumber(Number(data.sum))}</td>
+              <td className={stayles.number}>
+                {formatNumber(Number(data.sum))}
+              </td>
             </tr>
           )}
         </tfoot>

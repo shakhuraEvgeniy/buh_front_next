@@ -1,16 +1,20 @@
-"use client"
+'use client';
 import TableAccounts from './tableAccounts';
-import * as accountsApi from "@/app/utils/api/accounts";
-import { Accounts } from "@/app/lib/definitions";
+import * as accountsApi from '@/app/utils/api/accounts';
+import { Accounts } from '@/app/utils/definitions';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import stayles from "@/app/ui/Table/Table.module.css";
+import stayles from '@/app/ui/Table/Table.module.css';
 
 export default function AccountsPage() {
+  const [accounts, setAccounts] = useState<Accounts>({
+    accounts: [],
+    sum: '0',
+  });
 
-  const [accounts, setAccounts] = useState<Accounts>({ accounts: [], sum: "0" });
-
-  useEffect(() => { getAccounts() }, []);
+  useEffect(() => {
+    getAccounts();
+  }, []);
 
   const getAccounts = async () => {
     try {
@@ -18,9 +22,9 @@ export default function AccountsPage() {
       setAccounts(data);
     } catch (e) {
       console.log(e);
-      setAccounts({ accounts: [], sum: "0" });
+      setAccounts({ accounts: [], sum: '0' });
     }
-  }
+  };
 
   return (
     <>
@@ -30,5 +34,4 @@ export default function AccountsPage() {
       <TableAccounts data={accounts} />
     </>
   );
-};
-
+}

@@ -1,21 +1,15 @@
-import { MAIN_URL } from "../constants";
-import { Accounts } from '@/app/lib/definitions';
-
-const checkResponse = async (res: Response) => {
-  if (res.ok) {
-    return await res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-};
+import { MAIN_URL } from '@/app/utils/constants';
+import { Accounts } from '@/app/utils/definitions';
+import { checkResponse } from '@/app/utils/api/checkResponse';
 
 export const getAccountsApi = async (): Promise<Accounts> => {
   try {
     const res = await fetch(`${MAIN_URL}/account/accounts`, {
-      method: "GET",
+      method: 'GET',
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching accounts:', error);
     throw error;
   }
 };
@@ -27,10 +21,10 @@ export const transferAccountApi = async (
 ): Promise<Accounts> => {
   try {
     const res = await fetch(`${MAIN_URL}/account/transfer`, {
-      method: "PUT",
-      credentials: "include",
+      method: 'PUT',
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         startIdAccount,
@@ -40,7 +34,7 @@ export const transferAccountApi = async (
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching accounts:', error);
     throw error;
   }
-}
+};

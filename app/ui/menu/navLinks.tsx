@@ -6,10 +6,7 @@ import { usePathname } from 'next/navigation';
 
 const links = [
   { name: 'Счета', href: '/accounts' },
-  {
-    name: 'Расходы',
-    href: '/costs',
-  },
+  { name: 'Расходы', href: '/costs' },
   { name: 'Доходы', href: '/incomes' },
 ];
 

@@ -1,14 +1,16 @@
-"use client"
-import * as incomesApi from "@/app/utils/api/incomes";
-import Table from "@/app/ui/Table/Table";
-import { CostAndIncome } from "@/app/lib/definitions";
+'use client';
+import * as incomesApi from '@/app/utils/api/incomes';
+import Table from '@/app/ui/Table/Table';
+import { CostAndIncome } from '@/app/utils/definitions';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import stayles from "@/app/ui/Table/Table.module.css";
+import stayles from '@/app/ui/Table/Table.module.css';
 
 export default function Incomes() {
   const [incomes, setIncomes] = useState<CostAndIncome[]>([]);
-  useEffect(() => { getIncomes() }, []);
+  useEffect(() => {
+    getIncomes();
+  }, []);
 
   const getIncomes = async () => {
     try {
@@ -16,8 +18,8 @@ export default function Incomes() {
       setIncomes(data);
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
   return (
     <>
@@ -27,4 +29,4 @@ export default function Incomes() {
       <Table data={incomes} />
     </>
   );
-};
+}

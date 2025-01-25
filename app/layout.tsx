@@ -1,8 +1,7 @@
 import SideNav from './ui/menu/sidenav';
 import { inter } from '@/app/ui/fonts';
 import styles from '@/app/ui/menu/menu.module.css';
-import mainStyles from '@/app/ui/main.module.css'
-
+import mainStyles from '@/app/ui/main.module.css';
 
 export default function RootLayout({
   children,

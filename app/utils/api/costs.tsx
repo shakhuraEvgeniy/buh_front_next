@@ -1,21 +1,15 @@
-import { CostAndIncome } from '@/app/lib/definitions';
-import { MAIN_URL } from "../constants";
-
-const checkResponse = async (res: Response) => {
-  if (res.ok) {
-    return await res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-};
+import { CostAndIncome } from '@/app/utils/definitions';
+import { MAIN_URL } from '@/app/utils/constants';
+import { checkResponse } from '@/app/utils/api/checkResponse';
 
 export const getCostsApi = async (): Promise<CostAndIncome[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/cost/costs?limit=100`, {
-      method: "GET",
+      method: 'GET',
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching costs:", error);
+    console.error('Error fetching costs:', error);
     throw error;
   }
 };
@@ -30,10 +24,10 @@ export const addCostsApi = async (
 ) => {
   try {
     const res = await fetch(`${MAIN_URL}/cost/cost`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         accountId,
@@ -41,12 +35,12 @@ export const addCostsApi = async (
         sum,
         categoryId,
         subCategoryId,
-        comment
+        comment,
       }),
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching costs:", error);
+    console.error('Error fetching costs:', error);
     throw error;
   }
 };

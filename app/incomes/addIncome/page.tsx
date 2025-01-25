@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import FormAddCostAndIncome from '../../ui/addItemForm/addItemForm';
-import { Account, Category } from '../../lib/definitions';
-import * as accountsApi from "@/app/utils/api/accounts";
-import * as incomesApi from "@/app/utils/api/incomes";
-import * as categoryApi from "@/app/utils/api/categorys";
+import { Account, Category } from '../../utils/definitions';
+import * as accountsApi from '@/app/utils/api/accounts';
+import * as incomesApi from '@/app/utils/api/incomes';
+import * as categoryApi from '@/app/utils/api/categorys';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ export default function AddIncome() {
 
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
-    comment: "",
+    comment: '',
     categoryId: 1,
     subCategoryId: 0,
     accountId: 1,
@@ -25,8 +25,8 @@ export default function AddIncome() {
   });
 
   useEffect(() => {
-    getCategiryIncome()
-    getAccounts()
+    getCategoryIncome();
+    getAccounts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,21 +39,21 @@ export default function AddIncome() {
 
   const getAccounts = async () => {
     try {
-      const accounts = await accountsApi.getAccountsApi();
-      setAccounts(accounts.accounts);
+      const data = await accountsApi.getAccountsApi();
+      setAccounts(data.accounts);
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
-  const getCategiryIncome = async () => {
+  const getCategoryIncome = async () => {
     try {
       const cat = await categoryApi.getCategorysIncomeApi();
       setCategorys(cat);
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
   const getSubCategorysIncome = async (id: number) => {
     try {
@@ -62,41 +62,52 @@ export default function AddIncome() {
       values.subCategoryId = 0;
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
-  const handleChangeCategory = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeCategory = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     try {
       handleChange(e);
       await getSubCategorysIncome(Number(e.target.value));
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const createTimeWithTime = new Date(`${values.createTime}T${getCurrentDateTime().slice(11,)}`);
-      const subCategoryId = values.subCategoryId === 0 ? null : Number(values.subCategoryId);
-      await incomesApi.addIncomeApi(Number(values.accountId), createTimeWithTime, Number(values.sum), Number(values.categoryId), subCategoryId, values.comment);
+      const createTimeWithTime = new Date(
+        `${values.createTime}T${getCurrentDateTime().slice(11)}`
+      );
+      const subCategoryId =
+        values.subCategoryId === 0 ? null : Number(values.subCategoryId);
+      await incomesApi.addIncomeApi(
+        Number(values.accountId),
+        createTimeWithTime,
+        Number(values.sum),
+        Number(values.categoryId),
+        subCategoryId,
+        values.comment
+      );
       resetForm({
         sum: 0,
-        comment: "",
+        comment: '',
         categoryId: values.categoryId,
         subCategoryId: values.subCategoryId,
         accountId: values.accountId,
         createTime: values.createTime,
-      })
-
+      });
     } catch (e) {
       console.log(e);
-    };
-  }
+    }
+  };
 
   const handleCancel = () => {
     router.push('/incomes');
-  }
+  };
 
   return (
     <FormAddCostAndIncome
@@ -109,7 +120,7 @@ export default function AddIncome() {
       handleCancel={handleCancel}
       values={values}
       isValid={isValid}
-      title='Добавить доход' />
-
+      title="Добавить доход"
+    />
   );
 }

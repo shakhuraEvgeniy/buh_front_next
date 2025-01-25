@@ -1,57 +1,61 @@
-import { Category } from '@/app/lib/definitions';
-import { MAIN_URL } from "../constants";
-
-const checkResponse = async (res: Response) => {
-  if (res.ok) {
-    return await res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-};
+import { Category } from '@/app/utils/definitions';
+import { MAIN_URL } from '@/app/utils/constants';
+import { checkResponse } from '@/app/utils/api/checkResponse';
 
 export const getCategorysCostApi = async (): Promise<Category[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/categoryCost/categorys`, {
-      method: "GET",
+      method: 'GET',
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching categorys:', error);
     throw error;
   }
 };
 
-export const getSubCategorysCostApi = async (id: number): Promise<Category[]> => {
+export const getSubCategorysCostApi = async (
+  id: number
+): Promise<Category[]> => {
   try {
-    const res = await fetch(`${MAIN_URL}/categoryCost/subCategorys?idCategory=${id}`, {
-      method: "GET",
-    });
+    const res = await fetch(
+      `${MAIN_URL}/categoryCost/subCategorys?idCategory=${id}`,
+      {
+        method: 'GET',
+      }
+    );
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching categorys:', error);
     throw error;
   }
-}
+};
 
 export const getCategorysIncomeApi = async (): Promise<Category[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/categoryIncome/categorys`, {
-      method: "GET",
+      method: 'GET',
     });
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching categorys:', error);
     throw error;
   }
 };
 
-export const getSubCategorysIncomeApi = async (id: number): Promise<Category[]> => {
+export const getSubCategorysIncomeApi = async (
+  id: number
+): Promise<Category[]> => {
   try {
-    const res = await fetch(`${MAIN_URL}/categoryIncome/subCategorys?idCategory=${id}`, {
-      method: "GET",
-    });
+    const res = await fetch(
+      `${MAIN_URL}/categoryIncome/subCategorys?idCategory=${id}`,
+      {
+        method: 'GET',
+      }
+    );
     return await checkResponse(res);
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error('Error fetching categorys:', error);
     throw error;
   }
-}
+};
