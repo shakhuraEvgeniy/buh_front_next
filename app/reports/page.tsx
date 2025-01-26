@@ -23,7 +23,7 @@ export default function Reports() {
 
   const getCostReport = async (startDate: Date, stopDate: Date) => {
     try {
-      const data = await getReportIncomeApi(startDate, stopDate);
+      const data = await getReportCostApi(startDate, stopDate);
       setCostReport(data);
     } catch (e) {
       console.log(e);
@@ -32,7 +32,7 @@ export default function Reports() {
 
   const getIncomeReport = async (startDate: Date, stopDate: Date) => {
     try {
-      const data = await getReportCostApi(startDate, stopDate);
+      const data = await getReportIncomeApi(startDate, stopDate);
       setIncomeReport(data);
     } catch (e) {
       console.log(e);
@@ -85,8 +85,8 @@ export default function Reports() {
         </form>
       </div>
 
-      <TableReport data={costReport} title="Расходы" />
       <TableReport data={incomeReport} title="Доходы" />
+      <TableReport data={costReport} title="Расходы" />
     </>
   );
 }
