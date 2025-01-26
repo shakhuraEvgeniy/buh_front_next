@@ -1,11 +1,13 @@
-import { Accounts, Account } from "@/app/utils/definitions";
+import { Report, ItemReports } from "@/app/utils/definitions";
 import stayles from "@/app/ui/Table/Table.module.css";
+import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
-interface accountsProps {
-  data: Accounts;
+interface recordProps {
+  data: Report;
+  title: string;
 }
 
-const TableAccounts = ({ data }: accountsProps) => {
+const TableReport = ({ data, title }: recordProps) => {
   const formatNumber = (number: number) => {
     return number.toLocaleString("ru-RU", {
       style: "currency",
@@ -14,7 +16,8 @@ const TableAccounts = ({ data }: accountsProps) => {
   };
 
   return (
-    <>
+    <div className={styles.form}>
+      <h2 className={styles.title}>{title}</h2>
       <table className={stayles.table}>
         <thead>
           <tr >
@@ -23,30 +26,29 @@ const TableAccounts = ({ data }: accountsProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.accounts &&
-            data.accounts.map((item: Account, index: number) => {
+          {data.categorys &&
+            data.categorys.map((item: ItemReports, index: number) => {
               return (
                 <tr key={index}>
-                  <td >{item.name}</td>
-                  <td className={stayles.number}>{formatNumber(Number(item.current_sum))}</td>
-                  <td>{item.comment}</td>
+                  <td >{item.category}</td>
+                  <td className={stayles.number}>{formatNumber(Number(item.sum))}</td>
                 </tr>
               );
             })}
         </tbody>
         <tfoot>
-          {data.accounts && (
+          {data.categorys && (
             <tr>
               <th scope="row" colSpan={1}>
-                Итого на всех счетах:
+                Итого:
               </th>
               <td className={stayles.number}>{formatNumber(Number(data.sum))}</td>
             </tr>
           )}
         </tfoot>
       </table>
-    </>
+    </div>
   );
 };
 
-export default TableAccounts;
+export default TableReport;

@@ -8,6 +8,7 @@ import stayles from '@/app/ui/Table/Table.module.css';
 
 export default function Costs() {
   const [costs, setCosts] = useState<CostAndIncome[]>([]);
+
   useEffect(() => {
     getCosts();
   }, []);

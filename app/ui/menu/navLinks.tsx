@@ -8,6 +8,7 @@ const links = [
   { name: 'Счета', href: '/accounts' },
   { name: 'Расходы', href: '/costs' },
   { name: 'Доходы', href: '/incomes' },
+  { name: 'Отчеты', href: '/reports' },
 ];
 
 export default function NavLinks() {
