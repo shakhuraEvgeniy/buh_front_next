@@ -10,7 +10,7 @@ const Table = ({ data }: { data: CostAndIncome[] }) => {
     });
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       day: '2-digit',
       month: '2-digit',

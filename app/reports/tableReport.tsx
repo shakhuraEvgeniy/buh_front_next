@@ -79,7 +79,6 @@ const TableReport = ({ data, title }: recordProps) => {
             )}
           </tfoot>
         </table>
-
       </div>
       <h2 className={styles.title}>{title}</h2>
       <Doughnut data={chartData} />

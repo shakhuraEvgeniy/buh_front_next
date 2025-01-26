@@ -18,7 +18,7 @@ export type CostAndIncome = {
   category: string;
   sub_category: string;
   comment: string;
-  create_time: string;
+  create_time: Date;
 };
 
 export type Category = {
@@ -42,4 +42,14 @@ export type ItemReports = {
 export type Report = {
   categorys: ItemReports[];
   sum: string;
+};
+
+export type Receivables = {
+  id: number;
+  create_time: Date;
+  amount_of_debt: string;
+  funds_repaid: string;
+  debtor: string;
+  account: string;
+  debt_repaid: boolean;
 };
