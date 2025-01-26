@@ -8,8 +8,14 @@ import { useState } from 'react';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
 export default function Reports() {
-  const [costReport, setCostReport] = useState<Report>({ categorys: [], sum: '0' });
-  const [incomeReport, setIncomeReport] = useState<Report>({ categorys: [], sum: '0' });
+  const [costReport, setCostReport] = useState<Report>({
+    categorys: [],
+    sum: '0',
+  });
+  const [incomeReport, setIncomeReport] = useState<Report>({
+    categorys: [],
+    sum: '0',
+  });
   const { values, handleChange, isValid } = useFormWithValidation({
     startDate: getCurrentDateTime().slice(0, 10),
     stopDate: getCurrentDateTime().slice(0, 10),
@@ -43,29 +49,44 @@ export default function Reports() {
     }
   };
 
-
   return (
     <>
       <div className={styles.form}>
         <form onSubmit={handleSubmit}>
           <label className={styles.label}>
             Начало периода:
-            <input type="date" name="startDate" value={values.start} onChange={handleChange} required />
+            <input
+              type="date"
+              name="startDate"
+              value={values.start}
+              onChange={handleChange}
+              required
+            />
           </label>
 
           <label className={styles.label}>
             Конец периода:
-            <input type="date" name="stopDate" value={values.end} onChange={handleChange} required />
+            <input
+              type="date"
+              name="stopDate"
+              value={values.end}
+              onChange={handleChange}
+              required
+            />
           </label>
 
-          <button className={`${styles['button']} ${isValid || styles['button_disabled']}`}
+          <button
+            className={`${styles['button']} ${isValid || styles['button_disabled']}`}
             disabled={!isValid}
-            type="submit">Получить отчет</button>
+            type="submit"
+          >
+            Получить отчет
+          </button>
         </form>
       </div>
 
-      <TableReport data={costReport} title='Расходы' />
-      <TableReport data={incomeReport} title='Доходы' />
+      <TableReport data={costReport} title="Расходы" />
+      <TableReport data={incomeReport} title="Доходы" />
     </>
   );
 }
