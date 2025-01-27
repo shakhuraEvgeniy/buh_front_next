@@ -2,9 +2,9 @@ import { CostAndIncome } from '@/app/utils/definitions';
 import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
 
-export const getIncomesApi = async (): Promise<CostAndIncome[]> => {
+export const getIncomesApi = async (limit: number): Promise<CostAndIncome[]> => {
   try {
-    const res = await fetch(`${MAIN_URL}/income/incomes?limit=100`, {
+    const res = await fetch(`${MAIN_URL}/income/incomes?limit=${limit}`, {
       method: 'GET',
     });
     return await checkResponse(res);
