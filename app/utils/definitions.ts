@@ -1,20 +1,20 @@
 export type Account = {
   id: number;
   name: string;
-  start_sum: string;
-  current_sum: string;
+  start_sum: number;
+  current_sum: number;
   comment: string;
 };
 
 export type Accounts = {
   accounts: Account[];
-  sum: string;
+  sum: number;
 };
 
 export type CostAndIncome = {
   id: number;
   account: string;
-  sum: string;
+  sum: number;
   category: string;
   sub_category: string;
   comment: string;
@@ -36,7 +36,7 @@ export type Item = 'cost' | 'income' | 'account';
 
 export type ItemReports = {
   category: string;
-  sum: string;
+  sum: number;
 };
 
 export type Report = {
@@ -47,8 +47,8 @@ export type Report = {
 export type Receivables = {
   id: number;
   create_time: Date;
-  amount_of_debt: string;
-  funds_repaid: string;
+  amount_of_debt: number;
+  funds_repaid: number;
   debtor: string;
   account: string;
   debt_repaid: boolean;
