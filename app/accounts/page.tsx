@@ -21,7 +21,7 @@ export default function AccountsPage() {
       <Link className={styles.link} href="/accounts/transfer">
         <button className={styles.addButton}>Перенос средств</button>
       </Link>
-      {!isLoading ? <TableAccounts data={accounts} /> : <Loader />}
+      {isLoading ? <Loader /> : <TableAccounts data={accounts} />}
     </>
   );
 }

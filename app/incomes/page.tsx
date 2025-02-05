@@ -1,47 +1,40 @@
 'use client';
-import * as incomesApi from '@/app/utils/api/incomes';
 import Table from '@/app/ui/Table/Table';
-import { CostAndIncome } from '@/app/utils/definitions';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import stayles from '@/app/ui/Table/Table.module.css';
+import { AppDispatch, RootState } from '../lib/store/store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { fetchIncomes } from '../lib/store/reducers/incomes';
+import Loader from '../ui/loader/Loader';
 
 export default function Incomes() {
-  const [incomes, setIncomes] = useState<CostAndIncome[]>([]);
+  const dispatch: AppDispatch = useDispatch();
   const [limit, setLimit] = useState<number>(20);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    getIncomes();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [limit]);
-
-  const getIncomes = async () => {
-    setLoading(true);
-    try {
-      const data = await incomesApi.getIncomesApi(limit);
-      setIncomes(data);
-    } catch (e) {
-      console.log(e);
-      setIncomes([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { incomes, isLoading } = useSelector((state: RootState) => state.incomes);
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) return;
     setLimit((prevLimit) => prevLimit + 20);
   };
+
+  useEffect(() => {
+    dispatch(fetchIncomes(limit));
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, limit]);
+
+
 
   return (
     <>
       <Link className={stayles.link} href="/incomes/addIncome">
         <button className={stayles.addButton}>Добавить доход</button>
       </Link>
-      <Table data={incomes} />
-      {loading && <p>Загрузка...</p>}
+      {isLoading ? <Loader /> : <Table data={incomes} />}
+
     </>
   );
 }

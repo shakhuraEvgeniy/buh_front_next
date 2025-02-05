@@ -1,37 +1,28 @@
 'use client';
-import * as costsApi from '@/app/utils/api/costs';
 import Table from '@/app/ui/Table/Table';
-import { CostAndIncome } from '@/app/utils/definitions';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import stayles from '@/app/ui/Table/Table.module.css';
+import { AppDispatch, RootState } from '../lib/store/store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { fetchCosts } from '../lib/store/reducers/costs';
+import Loader from '../ui/loader/Loader';
 
 export default function Costs() {
-  const [costs, setCosts] = useState<CostAndIncome[]>([]);
+  const dispatch: AppDispatch = useDispatch();
   const [limit, setLimit] = useState<number>(20);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { costs, isLoading } = useSelector((state: RootState) => state.costs);
 
   useEffect(() => {
-    getCosts();
+    dispatch(fetchCosts(limit));
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [limit]);
-
-  const getCosts = async () => {
-    setLoading(true);
-    try {
-      const data = await costsApi.getCostsApi(limit);
-      setCosts(data);
-    } catch (e) {
-      console.log(e);
-      setCosts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [limit, dispatch]);
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) return;
     setLimit((prevLimit) => prevLimit + 20);
   };
 
@@ -40,8 +31,8 @@ export default function Costs() {
       <Link className={stayles.link} href="/costs/addCost">
         <button className={stayles.addButton}>Добавить расход</button>
       </Link>
-      <Table data={costs} />
-      {loading && <p>Загрузка...</p>}
+      {isLoading ? <Loader /> : <Table data={costs} />}
+
     </>
   );
 }
