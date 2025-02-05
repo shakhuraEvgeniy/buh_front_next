@@ -1,16 +1,3 @@
-export type Account = {
-  id: number;
-  name: string;
-  start_sum: number;
-  current_sum: number;
-  comment: string;
-};
-
-export type Accounts = {
-  accounts: Account[];
-  sum: number;
-};
-
 export type CostAndIncome = {
   id: number;
   account: string;
@@ -19,17 +6,6 @@ export type CostAndIncome = {
   sub_category: string;
   comment: string;
   create_time: Date;
-};
-
-export type Category = {
-  id: number;
-  name: string;
-};
-
-export type SubCategories = {
-  id: number;
-  name: string;
-  category_id: number;
 };
 
 export type Item = 'cost' | 'income' | 'account';

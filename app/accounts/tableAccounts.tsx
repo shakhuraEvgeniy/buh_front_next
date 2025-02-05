@@ -1,8 +1,8 @@
-import { Accounts, Account } from '@/app/utils/definitions';
 import stayles from '@/app/ui/Table/Table.module.css';
+import { IAccount, IAccounts } from '../lib/store/models/IAccount';
 
 interface accountsProps {
-  data: Accounts;
+  data: IAccounts;
 }
 
 const TableAccounts = ({ data }: accountsProps) => {
@@ -25,7 +25,7 @@ const TableAccounts = ({ data }: accountsProps) => {
         </thead>
         <tbody>
           {data.accounts &&
-            data.accounts.map((item: Account) => {
+            data.accounts.map((item: IAccount) => {
               return (
                 <tr key={item.id}>
                   <td>{item.name}</td>

@@ -1,8 +1,8 @@
-import { Category } from '@/app/utils/definitions';
 import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
+import { ICategory, ISubCategory } from '@/app/lib/store/models/ICategory';
 
-export const getCategorysCostApi = async (): Promise<Category[]> => {
+export const getCategorysCostApi = async (): Promise<ICategory[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/categoryCost/categorys`, {
       method: 'GET',
@@ -16,7 +16,7 @@ export const getCategorysCostApi = async (): Promise<Category[]> => {
 
 export const getSubCategorysCostApi = async (
   id: number
-): Promise<Category[]> => {
+): Promise<ICategory[]> => {
   try {
     const res = await fetch(
       `${MAIN_URL}/categoryCost/subCategorys?idCategory=${id}`,
@@ -31,7 +31,7 @@ export const getSubCategorysCostApi = async (
   }
 };
 
-export const getCategorysIncomeApi = async (): Promise<Category[]> => {
+export const getCategorysIncomeApi = async (): Promise<ICategory[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/categoryIncome/categorys`, {
       method: 'GET',
@@ -45,7 +45,7 @@ export const getCategorysIncomeApi = async (): Promise<Category[]> => {
 
 export const getSubCategorysIncomeApi = async (
   id: number
-): Promise<Category[]> => {
+): Promise<ISubCategory[]> => {
   try {
     const res = await fetch(
       `${MAIN_URL}/categoryIncome/subCategorys?idCategory=${id}`,

@@ -1,19 +1,21 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import FormAddCostAndIncome from '../../ui/addItemForm/addItemForm';
-import { Account, Category } from '../../utils/definitions';
-import * as accountsApi from '@/app/utils/api/accounts';
 import * as incomesApi from '@/app/utils/api/incomes';
-import * as categoryApi from '@/app/utils/api/categorys';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
+import { AppDispatch, RootState } from '@/app/lib/store/store';
+import { useDispatch } from 'react-redux';
+import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchCategorysIncome, fetchSubCategorysIncome } from '@/app/lib/store/reducers/incomeCategorySlice';
+import { useSelector } from 'react-redux';
 
 export default function AddIncome() {
   const router = useRouter();
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [categorys, setCategorys] = useState<Category[]>([]);
-  const [subCategorys, setSubCategorys] = useState<Category[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { categorys, subCategorys } = useSelector((state: RootState) => state.categoryIncome);
+  const { accounts } = useSelector((state: RootState) => state.accounts);
 
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
@@ -25,52 +27,23 @@ export default function AddIncome() {
   });
 
   useEffect(() => {
-    getCategoryIncome();
-    getAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchCategorysIncome())
+    dispatch(fetchAccounts());
+  }, [dispatch]);
 
   useEffect(() => {
     if (values.categoryId) {
-      getSubCategorysIncome(values.categoryId);
+      dispatch(fetchSubCategorysIncome(values.categoryId));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values.categoryId]);
+  }, [dispatch, values.categoryId]);
 
-  const getAccounts = async () => {
-    try {
-      const data = await accountsApi.getAccountsApi();
-      setAccounts(data.accounts);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getCategoryIncome = async () => {
-    try {
-      const cat = await categoryApi.getCategorysIncomeApi();
-      setCategorys(cat);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getSubCategorysIncome = async (id: number) => {
-    try {
-      const subCat = await categoryApi.getSubCategorysIncomeApi(id);
-      setSubCategorys(subCat);
-      values.subCategoryId = 0;
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const handleChangeCategory = async (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     try {
       handleChange(e);
-      await getSubCategorysIncome(Number(e.target.value));
+      await dispatch(fetchSubCategorysIncome(Number(e.target.value)));
     } catch (e) {
       console.log(e);
     }
@@ -115,7 +88,7 @@ export default function AddIncome() {
       handleChangeCategory={handleChangeCategory}
       categorys={categorys}
       subCategorys={subCategorys}
-      accounts={accounts}
+      accounts={accounts.accounts}
       handleChange={handleChange}
       handleCancel={handleCancel}
       values={values}

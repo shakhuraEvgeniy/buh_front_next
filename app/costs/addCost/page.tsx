@@ -2,18 +2,19 @@
 import * as categoryApi from '@/app/utils/api/categorys';
 import * as costsApi from '@/app/utils/api/costs';
 import * as accountsApi from '@/app/utils/api/accounts';
-import { Account, Category } from '@/app/utils/definitions';
 import { useEffect, useState } from 'react';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
+import { ICategory } from '@/app/lib/store/models/ICategory';
+import { IAccount } from '@/app/lib/store/models/IAccount';
 
 export default function AddCosts() {
   const router = useRouter();
-  const [categorys, setCategorys] = useState<Category[]>([]);
-  const [subCategorys, setSubCategorys] = useState<Category[]>([]);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [categorys, setCategorys] = useState<ICategory[]>([]);
+  const [subCategorys, setSubCategorys] = useState<ICategory[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
 
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
