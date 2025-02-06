@@ -16,7 +16,7 @@ export const getCategorysCostApi = async (): Promise<ICategory[]> => {
 
 export const getSubCategorysCostApi = async (
   id: number
-): Promise<ICategory[]> => {
+): Promise<ISubCategory[]> => {
   try {
     const res = await fetch(
       `${MAIN_URL}/categoryCost/subCategorys?idCategory=${id}`,

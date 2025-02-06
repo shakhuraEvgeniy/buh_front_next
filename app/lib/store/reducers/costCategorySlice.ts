@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICategory, ISubCategory } from '../models/ICategory';
 import {
-  getCategorysIncomeApi,
-  getSubCategorysIncomeApi,
+  getCategorysCostApi,
+  getSubCategorysCostApi,
 } from '@/app/utils/api/categorys';
 
 interface CategoryState {
@@ -12,18 +12,18 @@ interface CategoryState {
   error: string;
 }
 
-export const fetchCategorysIncome = createAsyncThunk(
-  'category/fetchCategorysIncome',
+export const fetchCategorysCost = createAsyncThunk(
+  'category/fetchCategorysCost',
   async () => {
-    const response = await getCategorysIncomeApi();
+    const response = await getCategorysCostApi();
     return response;
   }
 );
 
-export const fetchSubCategorysIncome = createAsyncThunk(
-  'category/fetchSubCategorysIncome',
+export const fetchSubCategorysCost = createAsyncThunk(
+  'category/fetchSubCategorysCost',
   async (id: number) => {
-    const response = await getSubCategorysIncomeApi(id);
+    const response = await getSubCategorysCostApi(id);
     return response;
   }
 );
@@ -35,43 +35,43 @@ const initialState: CategoryState = {
   error: '',
 };
 
-export const incomeCategorySlice = createSlice({
-  name: 'categoryIncome',
+export const costCategorySlice = createSlice({
+  name: 'categoryCost',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategorysIncome.pending, (state) => {
+      .addCase(fetchCategorysCost.pending, (state) => {
         state.isLoading = true;
         state.error = '';
       })
       .addCase(
-        fetchCategorysIncome.fulfilled,
+        fetchCategorysCost.fulfilled,
         (state, action: PayloadAction<ICategory[]>) => {
           state.isLoading = false;
           state.categorys = action.payload;
         }
       )
-      .addCase(fetchCategorysIncome.rejected, (state, action) => {
+      .addCase(fetchCategorysCost.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch categorys';
       })
-      .addCase(fetchSubCategorysIncome.pending, (state) => {
+      .addCase(fetchSubCategorysCost.pending, (state) => {
         state.isLoading = true;
         state.error = '';
       })
       .addCase(
-        fetchSubCategorysIncome.fulfilled,
+        fetchSubCategorysCost.fulfilled,
         (state, action: PayloadAction<ISubCategory[]>) => {
           state.isLoading = false;
           state.subCategorys = action.payload;
         }
       )
-      .addCase(fetchSubCategorysIncome.rejected, (state, action) => {
+      .addCase(fetchSubCategorysCost.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch subCategorys';
       });
   },
 });
 
-export default incomeCategorySlice.reducer;
+export default costCategorySlice.reducer;

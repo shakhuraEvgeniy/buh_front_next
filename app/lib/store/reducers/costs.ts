@@ -1,5 +1,5 @@
-import { getCostsApi } from '@/app/utils/api/costs';
-import { ICostAndIncome } from '../models/ICostAndIncome';
+import { addCostsApi, getCostsApi } from '@/app/utils/api/costs';
+import { IAddCostAndIncome, ICostAndIncome } from '../models/ICostAndIncome';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CostState {
@@ -12,6 +12,14 @@ export const fetchCosts = createAsyncThunk(
   'costs/fetchCosts',
   async (limit: number) => {
     const response = await getCostsApi(limit);
+    return response;
+  }
+);
+
+export const fetchAddCost = createAsyncThunk(
+  'costs/fetchAddCost',
+  async (cost: IAddCostAndIncome) => {
+    const response = await addCostsApi(cost);
     return response;
   }
 );
@@ -42,6 +50,17 @@ export const costSlice = createSlice({
       .addCase(fetchCosts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch costs';
+      })
+      .addCase(fetchAddCost.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchAddCost.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchAddCost.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to add cost';
       });
   },
 });

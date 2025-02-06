@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICostAndIncome } from '../models/ICostAndIncome';
-import { getIncomesApi } from '@/app/utils/api/incomes';
+import { IAddCostAndIncome, ICostAndIncome } from '../models/ICostAndIncome';
+import { addIncomeApi, getIncomesApi } from '@/app/utils/api/incomes';
 
 interface IncomeState {
   incomes: ICostAndIncome[];
@@ -12,6 +12,14 @@ export const fetchIncomes = createAsyncThunk(
   'incomes/fetchIncomes',
   async (limit: number) => {
     const response = await getIncomesApi(limit);
+    return response;
+  }
+);
+
+export const fetchAddIncome = createAsyncThunk(
+  'incomes/fetchAddIncome',
+  async (income: IAddCostAndIncome) => {
+    const response = await addIncomeApi(income);
     return response;
   }
 );
@@ -42,6 +50,17 @@ export const incomeSlice = createSlice({
       .addCase(fetchIncomes.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch incomes';
+      })
+      .addCase(fetchAddIncome.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchAddIncome.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchAddIncome.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to add income';
       });
   },
 });

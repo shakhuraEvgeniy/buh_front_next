@@ -1,15 +1,14 @@
 'use client';
 import { useEffect } from 'react';
 import FormAddCostAndIncome from '../../ui/addItemForm/addItemForm';
-import * as incomesApi from '@/app/utils/api/incomes';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
-import { useDispatch } from 'react-redux';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
 import { fetchCategorysIncome, fetchSubCategorysIncome } from '@/app/lib/store/reducers/incomeCategorySlice';
-import { useSelector } from 'react-redux';
+import { fetchAddIncome } from '@/app/lib/store/reducers/incomes';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function AddIncome() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function AddIncome() {
   const { categorys, subCategorys } = useSelector((state: RootState) => state.categoryIncome);
   const { accounts } = useSelector((state: RootState) => state.accounts);
 
-  const { values, handleChange, isValid, resetForm } = useFormWithValidation({
+  const { values, setValue, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
     comment: '',
     categoryId: 1,
@@ -34,7 +33,9 @@ export default function AddIncome() {
   useEffect(() => {
     if (values.categoryId) {
       dispatch(fetchSubCategorysIncome(values.categoryId));
+      setValue("subCategoryId", 0)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, values.categoryId]);
 
 
@@ -57,14 +58,14 @@ export default function AddIncome() {
       );
       const subCategoryId =
         values.subCategoryId === 0 ? null : Number(values.subCategoryId);
-      await incomesApi.addIncomeApi(
-        Number(values.accountId),
-        createTimeWithTime,
-        Number(values.sum),
-        Number(values.categoryId),
-        subCategoryId,
-        values.comment
-      );
+      await dispatch(fetchAddIncome({
+        accountId: Number(values.accountId),
+        createTime: createTimeWithTime,
+        sum: Number(values.sum),
+        categoryId: Number(values.categoryId),
+        subCategoryId: subCategoryId,
+        comment: values.comment
+      }));
       resetForm({
         sum: 0,
         comment: '',

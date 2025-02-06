@@ -7,3 +7,12 @@ export interface ICostAndIncome {
   comment: string;
   create_time: Date;
 }
+
+export interface IAddCostAndIncome {
+  accountId: number;
+  sum: number;
+  categoryId: number;
+  subCategoryId: number | null;
+  comment: string;
+  createTime: Date;
+}

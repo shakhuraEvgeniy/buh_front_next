@@ -31,6 +31,10 @@ export const useFormWithValidation = (inputValues) => {
     // }
   };
 
+  const setValue = (name, value) => {
+    setValues({ ...values, [name]: value });
+  };
+
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {
       setValues(newValues);
@@ -40,5 +44,13 @@ export const useFormWithValidation = (inputValues) => {
     [setValues, setErrors, setIsValid]
   );
 
-  return { values, handleChange, setValues, errors, isValid, resetForm };
+  return {
+    values,
+    setValue,
+    handleChange,
+    setValues,
+    errors,
+    isValid,
+    resetForm,
+  };
 };
