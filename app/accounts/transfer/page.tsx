@@ -25,7 +25,7 @@ export default function Transfer() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await dispatch(fetchTransfer(values)).unwrap();
+      await dispatch(fetchTransfer(values));
       resetForm({
         sum: 0,
         startIdAccount: 2,

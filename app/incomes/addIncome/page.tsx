@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
 import { fetchCategorysIncome, fetchSubCategorysIncome } from '@/app/lib/store/reducers/incomeCategorySlice';
-import { fetchAddIncome } from '@/app/lib/store/reducers/incomes';
+import { fetchAddIncome } from '@/app/lib/store/reducers/incomesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function AddIncome() {

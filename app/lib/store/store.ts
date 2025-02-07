@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import accountSlice from '@/app/lib/store/reducers/accoutSlice';
 import incomeCategorySlice from '@/app/lib/store/reducers/incomeCategorySlice';
-import incomeSlice from './reducers/incomes';
-import costSlice from './reducers/costs';
+import incomeSlice from './reducers/incomesSlice';
+import costSlice from './reducers/costsSlice';
 import costCategorySlice from './reducers/costCategorySlice';
+import receivablesSlice from './reducers/receivablesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     categoryCost: costCategorySlice,
     incomes: incomeSlice,
     costs: costSlice,
+    receivables: receivablesSlice,
   },
 });
 

@@ -6,7 +6,7 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchIncomes } from '../lib/store/reducers/incomes';
+import { fetchIncomes } from '../lib/store/reducers/incomesSlice';
 import Loader from '../ui/loader/Loader';
 
 export default function Incomes() {

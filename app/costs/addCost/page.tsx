@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategorysCost, fetchSubCategorysCost } from '@/app/lib/store/reducers/costCategorySlice';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
-import { fetchAddCost } from '@/app/lib/store/reducers/costs';
+import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
 
 export default function AddCosts() {
   const router = useRouter();

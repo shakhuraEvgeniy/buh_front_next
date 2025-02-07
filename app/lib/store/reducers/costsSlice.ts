@@ -44,7 +44,7 @@ export const costSlice = createSlice({
         fetchCosts.fulfilled,
         (state, action: PayloadAction<ICostAndIncome[]>) => {
           state.isLoading = false;
-          state.costs = action.payload;
+          state.costs.push(...action.payload);
         }
       )
       .addCase(fetchCosts.rejected, (state, action) => {
