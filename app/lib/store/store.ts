@@ -5,6 +5,7 @@ import incomeSlice from './reducers/incomesSlice';
 import costSlice from './reducers/costsSlice';
 import costCategorySlice from './reducers/costCategorySlice';
 import receivablesSlice from './reducers/receivablesSlice';
+import reportsSlice from './reducers/reportSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     incomes: incomeSlice,
     costs: costSlice,
     receivables: receivablesSlice,
+    reports: reportsSlice,
   },
 });
 
