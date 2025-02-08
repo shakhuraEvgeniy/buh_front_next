@@ -1,5 +1,9 @@
-import { addCostsApi, getCostsApi } from '@/app/utils/api/costs';
-import { IAddCostAndIncome, ICostAndIncome } from '../models/ICostAndIncome';
+import { addCostsApi, getCostsApi, updateCostApi } from '@/app/utils/api/costs';
+import {
+  IAddCostAndIncome,
+  ICostAndIncome,
+  IUpdateCost,
+} from '../models/ICostAndIncome';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CostState {
@@ -24,6 +28,14 @@ export const fetchAddCost = createAsyncThunk(
   }
 );
 
+export const fetchUpdateCost = createAsyncThunk(
+  'costs/fetchUpdateCost',
+  async (cost: IUpdateCost) => {
+    const response = await updateCostApi(cost);
+    return response;
+  }
+);
+
 const initialState: CostState = {
   costs: [],
   isLoading: false,
@@ -44,7 +56,7 @@ export const costSlice = createSlice({
         fetchCosts.fulfilled,
         (state, action: PayloadAction<ICostAndIncome[]>) => {
           state.isLoading = false;
-          state.costs.push(...action.payload);
+          state.costs = action.payload;
         }
       )
       .addCase(fetchCosts.rejected, (state, action) => {
@@ -61,6 +73,17 @@ export const costSlice = createSlice({
       .addCase(fetchAddCost.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to add cost';
+      })
+      .addCase(fetchUpdateCost.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchUpdateCost.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchUpdateCost.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to update cost';
       });
   },
 });

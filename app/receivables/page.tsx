@@ -9,7 +9,9 @@ import Loader from '../ui/loader/Loader';
 
 export default function ReceivablesPage() {
   const dispatch: AppDispatch = useDispatch();
-  const { receivables, isLoading } = useSelector((state: RootState) => state.receivables);
+  const { receivables, isLoading } = useSelector(
+    (state: RootState) => state.receivables
+  );
 
   useEffect(() => {
     dispatch(fetchReceivables());

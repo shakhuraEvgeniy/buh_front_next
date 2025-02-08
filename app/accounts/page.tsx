@@ -10,7 +10,9 @@ import Loader from '../ui/loader/Loader';
 
 export default function AccountsPage() {
   const dispatch: AppDispatch = useDispatch();
-  const { accounts, isLoading } = useSelector((state: RootState) => state.accounts);
+  const { accounts, isLoading } = useSelector(
+    (state: RootState) => state.accounts
+  );
 
   useEffect(() => {
     dispatch(fetchAccounts());

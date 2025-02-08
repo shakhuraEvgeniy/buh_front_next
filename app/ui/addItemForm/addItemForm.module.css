@@ -41,6 +41,10 @@
   background-color: #6c757d;
 }
 
+.button_delete {
+  background-color: #dc3545;
+}
+
 .button_disabled {
   background: #f8f8f8;
   color: #c2c2c2;

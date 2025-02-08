@@ -5,12 +5,17 @@ import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccounts, fetchTransfer } from '@/app/lib/store/reducers/accoutSlice';
+import {
+  fetchAccounts,
+  fetchTransfer,
+} from '@/app/lib/store/reducers/accoutSlice';
 
 export default function Transfer() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { accounts, isLoading } = useSelector((state: RootState) => state.accounts);
+  const { accounts, isLoading } = useSelector(
+    (state: RootState) => state.accounts
+  );
 
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
@@ -30,11 +35,11 @@ export default function Transfer() {
         sum: 0,
         startIdAccount: 2,
         finishIdAccount: 1,
-      })
+      });
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleCancel = () => {
     router.push('/accounts');

@@ -1,8 +1,13 @@
 import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
-import { IAddCostAndIncome, ICostAndIncome } from '@/app/lib/store/models/ICostAndIncome';
+import {
+  IAddCostAndIncome,
+  ICostAndIncome,
+} from '@/app/lib/store/models/ICostAndIncome';
 
-export const getIncomesApi = async (limit: number): Promise<ICostAndIncome[]> => {
+export const getIncomesApi = async (
+  limit: number
+): Promise<ICostAndIncome[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/income/incomes?limit=${limit}`, {
       method: 'GET',
@@ -20,9 +25,8 @@ export const addIncomeApi = async ({
   sum,
   categoryId,
   subCategoryId,
-  comment
-}: IAddCostAndIncome
-): Promise<ICostAndIncome> => {
+  comment,
+}: IAddCostAndIncome): Promise<ICostAndIncome> => {
   try {
     const res = await fetch(`${MAIN_URL}/income/addIncome`, {
       method: 'POST',

@@ -6,24 +6,30 @@ import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategorysCost, fetchSubCategorysCost } from '@/app/lib/store/reducers/costCategorySlice';
+import {
+  fetchCategorysCost,
+  fetchSubCategorysCost,
+} from '@/app/lib/store/reducers/costCategorySlice';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
 import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
 
 export default function AddCosts() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { categorys, subCategorys } = useSelector((state: RootState) => state.categoryCost);
+  const { categorys, subCategorys } = useSelector(
+    (state: RootState) => state.categoryCost
+  );
   const { accounts } = useSelector((state: RootState) => state.accounts);
 
-  const { values, setValue, handleChange, isValid, resetForm } = useFormWithValidation({
-    sum: 0,
-    comment: '',
-    categoryId: 1,
-    subCategoryId: 0,
-    accountId: 1,
-    createTime: getCurrentDateTime().slice(0, 10),
-  });
+  const { values, setValue, handleChange, isValid, resetForm } =
+    useFormWithValidation({
+      sum: 0,
+      comment: '',
+      categoryId: 1,
+      subCategoryId: 0,
+      accountId: 1,
+      createTime: getCurrentDateTime().slice(0, 10),
+    });
 
   useEffect(() => {
     dispatch(fetchCategorysCost());
@@ -33,7 +39,7 @@ export default function AddCosts() {
   useEffect(() => {
     if (values.categoryId) {
       dispatch(fetchSubCategorysCost(values.categoryId));
-      setValue("subCategoryId", 0)
+      setValue('subCategoryId', 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, values.categoryId]);
@@ -46,14 +52,16 @@ export default function AddCosts() {
       );
       const subCategoryId =
         values.subCategoryId === 0 ? null : Number(values.subCategoryId);
-      await dispatch(fetchAddCost({
-        accountId: Number(values.accountId),
-        sum: Number(values.sum),
-        categoryId: Number(values.categoryId),
-        subCategoryId: subCategoryId,
-        comment: values.comment,
-        createTime: createTimeWithTime,
-      }));
+      await dispatch(
+        fetchAddCost({
+          accountId: Number(values.accountId),
+          sum: Number(values.sum),
+          categoryId: Number(values.categoryId),
+          subCategoryId: subCategoryId,
+          comment: values.comment,
+          createTime: createTimeWithTime,
+        })
+      );
       resetForm({
         sum: 0,
         comment: '',
@@ -78,7 +86,8 @@ export default function AddCosts() {
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     router.push('/costs');
   };
 
@@ -94,6 +103,7 @@ export default function AddCosts() {
       values={values}
       isValid={isValid}
       title="Добавить расход"
+      submitName="Добавить"
     />
   );
 }

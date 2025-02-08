@@ -5,11 +5,16 @@ import { useFormWithValidation } from '../hooks/useFormWithValidation';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCostReport, fetchIncomeReport } from '../lib/store/reducers/reportSlice';
+import {
+  fetchCostReport,
+  fetchIncomeReport,
+} from '../lib/store/reducers/reportSlice';
 
 export default function Reports() {
   const dispatch: AppDispatch = useDispatch();
-  const { incomeReport, costReport } = useSelector((state: RootState) => state.reports);
+  const { incomeReport, costReport } = useSelector(
+    (state: RootState) => state.reports
+  );
 
   const { values, handleChange, isValid } = useFormWithValidation({
     startDate: getCurrentDateTime().slice(0, 10),

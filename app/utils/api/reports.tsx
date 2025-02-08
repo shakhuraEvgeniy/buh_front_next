@@ -2,9 +2,10 @@ import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
 import { IPeriod, IReport } from '@/app/lib/store/models/IReport';
 
-export const getReportIncomeApi = async (
-  { startDate, stopDate }: IPeriod
-): Promise<IReport> => {
+export const getReportIncomeApi = async ({
+  startDate,
+  stopDate,
+}: IPeriod): Promise<IReport> => {
   try {
     const res = await fetch(`${MAIN_URL}/reports/income`, {
       method: 'POST',
@@ -24,9 +25,10 @@ export const getReportIncomeApi = async (
   }
 };
 
-export const getReportCostApi = async (
-  { startDate, stopDate }: IPeriod
-): Promise<IReport> => {
+export const getReportCostApi = async ({
+  startDate,
+  stopDate,
+}: IPeriod): Promise<IReport> => {
   try {
     const res = await fetch(`${MAIN_URL}/reports/cost`, {
       method: 'POST',
