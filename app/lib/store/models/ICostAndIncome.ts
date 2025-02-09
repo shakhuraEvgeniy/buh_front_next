@@ -29,3 +29,13 @@ export interface IUpdateCost {
   comment: string;
   createTime: Date;
 }
+
+export interface IUpdateIncome {
+  incomeId: number;
+  accountId: number;
+  sum: number;
+  categoryId: number;
+  subCategoryId: number | null;
+  comment: string;
+  createTime: Date;
+}

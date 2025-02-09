@@ -1,57 +1,51 @@
-'use client';
-import React, { useEffect } from 'react';
+import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
+import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchCategorysIncome, fetchSubCategorysIncome } from '@/app/lib/store/reducers/incomeCategorySlice';
+import { fetchUpdateIncome } from '@/app/lib/store/reducers/incomesSlice';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
-import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentDateTime } from '@/app/utils/getDate';
-import {
-  fetchCategorysCost,
-  fetchSubCategorysCost,
-} from '@/app/lib/store/reducers/costCategorySlice';
-import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import { fetchUpdateCost } from '@/app/lib/store/reducers/costsSlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
 interface Params {
   id: string;
 }
 
-export default function EditCostPage({ params }: { params: React.Usable<Params> }) {
+export default function EditIncomePage({ params }: { params: React.Usable<Params> }) {
   const { id } = React.use<Params>(params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { costs } = useSelector((state: RootState) => state.costs);
+  const { incomes } = useSelector((state: RootState) => state.incomes);
+  const startValues = incomes.find((item) => item.id === Number(id));
   const { categorys, subCategorys } = useSelector(
-    (state: RootState) => state.categoryCost
+    (state: RootState) => state.categoryIncome
   );
   const { accounts } = useSelector((state: RootState) => state.accounts);
-  const startValues = costs.find((item) => item.id === Number(id));
 
   const { values, setValue, handleChange, isValid } = useFormWithValidation({
     sum: startValues?.sum || 0,
     comment: startValues?.comment || '',
+    accountId: startValues?.accountid || 1,
     categoryId: startValues?.categoryid || 1,
     subCategoryId: startValues?.subcategoryid || 0,
-    accountId: startValues?.accountid || 1,
-    createTime:
-      String(startValues?.create_time).slice(0, 10) ||
-      getCurrentDateTime().slice(0, 10),
-  });
+    createTime: String(startValues?.create_time).slice(0, 10) || getCurrentDateTime().slice(0, 10),
+  })
 
   useEffect(() => {
-    dispatch(fetchCategorysCost());
+    dispatch(fetchCategorysIncome());
     dispatch(fetchAccounts());
     if (values.categoryId > 0) {
-      dispatch(fetchSubCategorysCost(Number(values.categoryId)));
+      dispatch(fetchSubCategorysIncome(Number(values.categoryId)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (values.categoryId > 0) {
-      dispatch(fetchSubCategorysCost(values.categoryId));
+      dispatch(fetchSubCategorysIncome(values.categoryId));
       if (values.categoryId !== startValues?.categoryid) {
         setValue('subCategoryId', 0);
       }
@@ -59,47 +53,41 @@ export default function EditCostPage({ params }: { params: React.Usable<Params> 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, values.categoryId]);
 
-  const handleChangeCategory = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleChangeCategory = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     try {
       handleChange(e);
-      await dispatch(fetchSubCategorysCost(Number(e.target.value)));
+      await dispatch(fetchSubCategorysIncome(Number(e.target.value)));
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.back();
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const createTimeWithTime = new Date(
-        `${values.createTime}T${getCurrentDateTime().slice(11)}`
-      );
-      const subCategoryId =
-        values.subCategoryId === '0' ? null : Number(values.subCategoryId);
+      const createTimeWithTime = new Date(`${values.createTime}T${getCurrentDateTime().slice(11)}`);
+      const subCategoryId = values.subCategoryId === '0' ? null : Number(values.subCategoryId);
       await dispatch(
-        fetchUpdateCost({
-          costId: Number(id),
+        fetchUpdateIncome({
+          incomeId: Number(values.incomeId),
           accountId: Number(values.accountId),
+          createTime: createTimeWithTime,
           sum: Number(values.sum),
           categoryId: Number(values.categoryId),
           subCategoryId,
           comment: values.comment,
-          createTime: createTimeWithTime,
         })
       );
       router.back();
     } catch (e) {
       console.log(e);
     }
-  };
-
+  }
   return (
     <FormAddCostAndIncome
       handleSubmit={handleSubmit}
@@ -111,7 +99,7 @@ export default function EditCostPage({ params }: { params: React.Usable<Params> 
       handleCancel={handleCancel}
       values={values}
       isValid={isValid}
-      title="Изменение расхода"
+      title="Изменение дохода"
       submitName="Изменить"
     >
       <button
@@ -120,6 +108,5 @@ export default function EditCostPage({ params }: { params: React.Usable<Params> 
       >
         Удалить
       </button>
-    </FormAddCostAndIncome>
-  );
+    </FormAddCostAndIncome>)
 }

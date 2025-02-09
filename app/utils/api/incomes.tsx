@@ -3,6 +3,7 @@ import { checkResponse } from '@/app/utils/api/checkResponse';
 import {
   IAddCostAndIncome,
   ICostAndIncome,
+  IUpdateIncome,
 } from '@/app/lib/store/models/ICostAndIncome';
 
 export const getIncomesApi = async (
@@ -35,6 +36,39 @@ export const addIncomeApi = async ({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        accountId,
+        createTime,
+        sum,
+        categoryId,
+        subCategoryId,
+        comment,
+      }),
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error('Error fetching incomes:', error);
+    throw error;
+  }
+};
+
+export const updateIncomeApi = async ({
+  incomeId,
+  accountId,
+  createTime,
+  sum,
+  categoryId,
+  subCategoryId,
+  comment,
+}: IUpdateIncome): Promise<ICostAndIncome> => {
+  try {
+    const res = await fetch(`${MAIN_URL}/income/income`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        incomeId,
         accountId,
         createTime,
         sum,
