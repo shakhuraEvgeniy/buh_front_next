@@ -1,7 +1,14 @@
+'use client';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
-import { fetchCategorysIncome, fetchSubCategorysIncome } from '@/app/lib/store/reducers/incomeCategorySlice';
-import { fetchUpdateIncome } from '@/app/lib/store/reducers/incomesSlice';
+import {
+  fetchCategorysIncome,
+  fetchSubCategorysIncome,
+} from '@/app/lib/store/reducers/incomeCategorySlice';
+import {
+  fetchDeleteIncome,
+  fetchUpdateIncome,
+} from '@/app/lib/store/reducers/incomesSlice';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '@/app/utils/getDate';
@@ -14,7 +21,11 @@ interface Params {
   id: string;
 }
 
-export default function EditIncomePage({ params }: { params: React.Usable<Params> }) {
+export default function EditIncomePage({
+  params,
+}: {
+  params: React.Usable<Params>;
+}) {
   const { id } = React.use<Params>(params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
@@ -24,6 +35,7 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
     (state: RootState) => state.categoryIncome
   );
   const { accounts } = useSelector((state: RootState) => state.accounts);
+  console.log('startValues', startValues);
 
   const { values, setValue, handleChange, isValid } = useFormWithValidation({
     sum: startValues?.sum || 0,
@@ -31,8 +43,10 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
     accountId: startValues?.accountid || 1,
     categoryId: startValues?.categoryid || 1,
     subCategoryId: startValues?.subcategoryid || 0,
-    createTime: String(startValues?.create_time).slice(0, 10) || getCurrentDateTime().slice(0, 10),
-  })
+    createTime:
+      String(startValues?.create_time).slice(0, 10) ||
+      getCurrentDateTime().slice(0, 10),
+  });
 
   useEffect(() => {
     dispatch(fetchCategorysIncome());
@@ -41,7 +55,7 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
       dispatch(fetchSubCategorysIncome(Number(values.categoryId)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (values.categoryId > 0) {
@@ -53,25 +67,30 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, values.categoryId]);
 
-  const handleChangeCategory = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeCategory = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     try {
       handleChange(e);
       await dispatch(fetchSubCategorysIncome(Number(e.target.value)));
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.back();
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const createTimeWithTime = new Date(`${values.createTime}T${getCurrentDateTime().slice(11)}`);
-      const subCategoryId = values.subCategoryId === '0' ? null : Number(values.subCategoryId);
+      const createTimeWithTime = new Date(
+        `${values.createTime}T${getCurrentDateTime().slice(11)}`
+      );
+      const subCategoryId =
+        values.subCategoryId === '0' ? null : Number(values.subCategoryId);
       await dispatch(
         fetchUpdateIncome({
           incomeId: Number(values.incomeId),
@@ -87,7 +106,20 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
     } catch (e) {
       console.log(e);
     }
-  }
+  };
+
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('delete');
+
+    try {
+      await dispatch(fetchDeleteIncome(Number(id)));
+      router.back();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <FormAddCostAndIncome
       handleSubmit={handleSubmit}
@@ -104,9 +136,10 @@ export default function EditIncomePage({ params }: { params: React.Usable<Params
     >
       <button
         className={`${styles.button} ${styles['button_delete']}`}
-      // onClick={handleCancel}
+        onClick={(event) => handleDelete(event)}
       >
         Удалить
       </button>
-    </FormAddCostAndIncome>)
+    </FormAddCostAndIncome>
+  );
 }

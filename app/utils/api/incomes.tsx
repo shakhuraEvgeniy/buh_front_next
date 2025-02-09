@@ -83,3 +83,22 @@ export const updateIncomeApi = async ({
     throw error;
   }
 };
+
+export const deleteIncomeApi = async (incomeId: number): Promise<void> => {
+  try {
+    const res = await fetch(`${MAIN_URL}/income/income`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        incomeId,
+      }),
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error('Error fetching incomes:', error);
+    throw error;
+  }
+};

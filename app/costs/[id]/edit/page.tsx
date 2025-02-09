@@ -10,7 +10,10 @@ import {
   fetchSubCategorysCost,
 } from '@/app/lib/store/reducers/costCategorySlice';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import { fetchUpdateCost } from '@/app/lib/store/reducers/costsSlice';
+import {
+  fetchDeleteCost,
+  fetchUpdateCost,
+} from '@/app/lib/store/reducers/costsSlice';
 import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
@@ -18,7 +21,11 @@ interface Params {
   id: string;
 }
 
-export default function EditCostPage({ params }: { params: React.Usable<Params> }) {
+export default function EditCostPage({
+  params,
+}: {
+  params: React.Usable<Params>;
+}) {
   const { id } = React.use<Params>(params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
@@ -100,6 +107,16 @@ export default function EditCostPage({ params }: { params: React.Usable<Params> 
     }
   };
 
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      await dispatch(fetchDeleteCost(Number(id)));
+      router.back();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <FormAddCostAndIncome
       handleSubmit={handleSubmit}
@@ -116,7 +133,7 @@ export default function EditCostPage({ params }: { params: React.Usable<Params> 
     >
       <button
         className={`${styles.button} ${styles['button_delete']}`}
-      // onClick={handleCancel}
+        onClick={(event) => handleDelete(event)}
       >
         Удалить
       </button>

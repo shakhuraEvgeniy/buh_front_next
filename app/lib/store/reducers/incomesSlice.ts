@@ -6,6 +6,7 @@ import {
 } from '../models/ICostAndIncome';
 import {
   addIncomeApi,
+  deleteIncomeApi,
   getIncomesApi,
   updateIncomeApi,
 } from '@/app/utils/api/incomes';
@@ -36,6 +37,14 @@ export const fetchUpdateIncome = createAsyncThunk(
   'incomes/fetchUpdateIncome',
   async (income: IUpdateIncome) => {
     const response = await updateIncomeApi(income);
+    return response;
+  }
+);
+
+export const fetchDeleteIncome = createAsyncThunk(
+  'incomes/fetchDeleteIncome',
+  async (incomeId: number) => {
+    const response = await deleteIncomeApi(incomeId);
     return response;
   }
 );
@@ -88,6 +97,17 @@ export const incomeSlice = createSlice({
       .addCase(fetchUpdateIncome.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to update income';
+      })
+      .addCase(fetchDeleteIncome.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchDeleteIncome.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchDeleteIncome.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to delete income';
       });
   },
 });

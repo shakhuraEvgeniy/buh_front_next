@@ -81,3 +81,24 @@ export const updateCostApi = async ({
     throw error;
   }
 };
+
+export const deleteCostApi = async (
+  costId: number
+): Promise<ICostAndIncome> => {
+  try {
+    const res = await fetch(`${MAIN_URL}/cost/cost/`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        costId,
+      }),
+    });
+    return await checkResponse(res);
+  } catch (error) {
+    console.error('Error fetching costs:', error);
+    throw error;
+  }
+};

@@ -7,8 +7,11 @@ import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCosts } from '../lib/store/reducers/costsSlice';
 import Loader from '../ui/loader/Loader';
+import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
+import { useRouter } from 'next/navigation';
 
 export default function Costs() {
+  const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const [limit, setLimit] = useState<number>(20);
   const { costs, isLoading } = useSelector((state: RootState) => state.costs);
@@ -30,12 +33,20 @@ export default function Costs() {
     setLimit((prevLimit) => prevLimit + 20);
   };
 
+  const handleClickItem = (item: ICostAndIncome) => {
+    router.push(`/costs/${item.id}/edit`);
+  };
+
   return (
     <>
       <Link className={stayles.link} href="/costs/addCost">
         <button className={stayles.addButton}>Добавить расход</button>
       </Link>
-      {isLoading ? <Loader /> : <Table data={costs} />}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table data={costs} handleClickItem={handleClickItem} />
+      )}
     </>
   );
 }

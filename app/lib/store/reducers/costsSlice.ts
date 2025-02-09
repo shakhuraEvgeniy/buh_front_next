@@ -1,4 +1,9 @@
-import { addCostsApi, getCostsApi, updateCostApi } from '@/app/utils/api/costs';
+import {
+  addCostsApi,
+  deleteCostApi,
+  getCostsApi,
+  updateCostApi,
+} from '@/app/utils/api/costs';
 import {
   IAddCostAndIncome,
   ICostAndIncome,
@@ -32,6 +37,14 @@ export const fetchUpdateCost = createAsyncThunk(
   'costs/fetchUpdateCost',
   async (cost: IUpdateCost) => {
     const response = await updateCostApi(cost);
+    return response;
+  }
+);
+
+export const fetchDeleteCost = createAsyncThunk(
+  'costs/fetchDeleteCost',
+  async (costId: number) => {
+    const response = await deleteCostApi(costId);
     return response;
   }
 );
@@ -84,6 +97,17 @@ export const costSlice = createSlice({
       .addCase(fetchUpdateCost.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to update cost';
+      })
+      .addCase(fetchDeleteCost.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchDeleteCost.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchDeleteCost.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to delete cost';
       });
   },
 });

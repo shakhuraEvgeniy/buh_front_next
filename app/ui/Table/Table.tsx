@@ -1,10 +1,13 @@
 import React from 'react';
 import stayles from '@/app/ui/Table/Table.module.css';
 import { ICostAndIncome } from '@/app/lib/store/models/ICostAndIncome';
-import { useRouter } from 'next/navigation';
 
-const Table = ({ data }: { data: ICostAndIncome[] }) => {
-  const router = useRouter();
+interface ITableProps {
+  data: ICostAndIncome[];
+  handleClickItem: (item: ICostAndIncome) => void;
+}
+
+const Table = ({ data, handleClickItem }: ITableProps) => {
   const formatNumber = (number: number) => {
     return number.toLocaleString('ru-RU', {
       style: 'currency',
@@ -32,10 +35,6 @@ const Table = ({ data }: { data: ICostAndIncome[] }) => {
     },
     {} as Record<string, ICostAndIncome[]>
   );
-
-  const handleClickItem = (item: ICostAndIncome) => {
-    router.push(`/costs/${item.id}/edit`);
-  };
 
   return (
     <>
