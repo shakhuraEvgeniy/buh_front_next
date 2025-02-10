@@ -1,47 +1,40 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { Account } from '../../utils/definitions';
+import { useEffect } from 'react';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import * as accountsApi from '@/app/utils/api/accounts';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { useRouter } from 'next/navigation';
+import { AppDispatch, RootState } from '@/app/lib/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchAccounts,
+  fetchTransfer,
+} from '@/app/lib/store/reducers/accoutSlice';
 
 export default function Transfer() {
   const router = useRouter();
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { accounts, isLoading } = useSelector(
+    (state: RootState) => state.accounts
+  );
+
   const { values, handleChange, isValid, resetForm } = useFormWithValidation({
     sum: 0,
-    startIdAccount: 1,
-    finishIdAccount: 2,
+    startIdAccount: 2,
+    finishIdAccount: 1,
   });
 
   useEffect(() => {
-    getAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getAccounts = async () => {
-    try {
-      const accounts = await accountsApi.getAccountsApi();
-      setAccounts(accounts.accounts);
-      console.log(values);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    dispatch(fetchAccounts());
+  }, [dispatch]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await accountsApi.transferAccountApi(
-        Number(values.startIdAccount),
-        Number(values.finishIdAccount),
-        Number(values.sum)
-      );
+      await dispatch(fetchTransfer(values));
       resetForm({
         sum: 0,
-        startIdAccount: 1,
-        finishIdAccount: 2,
+        startIdAccount: 2,
+        finishIdAccount: 1,
       });
     } catch (e) {
       console.log(e);
@@ -63,8 +56,9 @@ export default function Transfer() {
             onChange={handleChange}
             value={values.startIdAccount}
             required
+            disabled={isLoading}
           >
-            {accounts.map((account) => (
+            {accounts.accounts.map((account) => (
               <option key={account.id} value={account.id}>
                 {account.name}
               </option>
@@ -77,10 +71,11 @@ export default function Transfer() {
           <select
             name="finishIdAccount"
             onChange={handleChange}
-            value={values.finishIdAccount}
+            value={isLoading ? 'Загрузка' : values.finishIdAccount}
             required
+            disabled={isLoading}
           >
-            {accounts.map((account) => (
+            {accounts.accounts.map((account) => (
               <option key={account.id} value={account.id}>
                 {account.name}
               </option>
@@ -105,7 +100,7 @@ export default function Transfer() {
 
         <button
           className={`${styles['button']} ${isValid || styles['button_disabled']}`}
-          disabled={!isValid}
+          disabled={!isValid || isLoading}
           type="submit"
         >
           Добавить

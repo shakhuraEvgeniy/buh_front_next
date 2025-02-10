@@ -1,69 +1,48 @@
 'use client';
-import * as categoryApi from '@/app/utils/api/categorys';
-import * as costsApi from '@/app/utils/api/costs';
-import * as accountsApi from '@/app/utils/api/accounts';
-import { Account, Category } from '@/app/utils/definitions';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
+import { AppDispatch, RootState } from '@/app/lib/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchCategorysCost,
+  fetchSubCategorysCost,
+} from '@/app/lib/store/reducers/costCategorySlice';
+import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
 
 export default function AddCosts() {
   const router = useRouter();
-  const [categorys, setCategorys] = useState<Category[]>([]);
-  const [subCategorys, setSubCategorys] = useState<Category[]>([]);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { categorys, subCategorys } = useSelector(
+    (state: RootState) => state.categoryCost
+  );
+  const { accounts } = useSelector((state: RootState) => state.accounts);
 
-  const { values, handleChange, isValid, resetForm } = useFormWithValidation({
-    sum: 0,
-    comment: '',
-    categoryId: 1,
-    subCategoryId: 0,
-    accountId: 1,
-    createTime: getCurrentDateTime().slice(0, 10),
-  });
+  const { values, setValue, handleChange, isValid, resetForm } =
+    useFormWithValidation({
+      sum: 0,
+      comment: '',
+      categoryId: 1,
+      subCategoryId: 0,
+      accountId: 1,
+      createTime: getCurrentDateTime().slice(0, 10),
+    });
 
   useEffect(() => {
-    getCategoryCost();
-    getAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchCategorysCost());
+    dispatch(fetchAccounts());
+  }, [dispatch]);
 
   useEffect(() => {
     if (values.categoryId) {
-      getSubCategorysCost(values.categoryId);
+      dispatch(fetchSubCategorysCost(values.categoryId));
+      setValue('subCategoryId', 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values.categoryId]);
-
-  const getCategoryCost = async () => {
-    try {
-      const cat = await categoryApi.getCategorysCostApi();
-      setCategorys(cat);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getSubCategorysCost = async (id: number) => {
-    try {
-      const subCat = await categoryApi.getSubCategorysCostApi(id);
-      setSubCategorys(subCat);
-      values.subCategoryId = 0;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getAccounts = async () => {
-    try {
-      const accounts = await accountsApi.getAccountsApi();
-      setAccounts(accounts.accounts);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  }, [dispatch, values.categoryId]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,13 +52,15 @@ export default function AddCosts() {
       );
       const subCategoryId =
         values.subCategoryId === 0 ? null : Number(values.subCategoryId);
-      await costsApi.addCostsApi(
-        Number(values.accountId),
-        createTimeWithTime,
-        Number(values.sum),
-        Number(values.categoryId),
-        subCategoryId,
-        values.comment
+      await dispatch(
+        fetchAddCost({
+          accountId: Number(values.accountId),
+          sum: Number(values.sum),
+          categoryId: Number(values.categoryId),
+          subCategoryId: subCategoryId,
+          comment: values.comment,
+          createTime: createTimeWithTime,
+        })
       );
       resetForm({
         sum: 0,
@@ -99,13 +80,14 @@ export default function AddCosts() {
   ) => {
     try {
       handleChange(e);
-      await getSubCategorysCost(Number(e.target.value));
+      await dispatch(fetchSubCategorysCost(Number(e.target.value)));
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     router.push('/costs');
   };
 
@@ -115,12 +97,13 @@ export default function AddCosts() {
       handleChangeCategory={handleChangeCategory}
       categorys={categorys}
       subCategorys={subCategorys}
-      accounts={accounts}
+      accounts={accounts.accounts}
       handleChange={handleChange}
       handleCancel={handleCancel}
       values={values}
       isValid={isValid}
       title="Добавить расход"
+      submitName="Добавить"
     />
   );
 }

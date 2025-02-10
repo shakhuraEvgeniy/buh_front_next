@@ -1,27 +1,25 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { getReceivablesApi } from '../utils/api/receivables';
-import { Receivables } from '../utils/definitions';
+import { useEffect } from 'react';
 import TableReceivables from './tableDebt';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../lib/store/store';
+import { useSelector } from 'react-redux';
+import { fetchReceivables } from '../lib/store/reducers/receivablesSlice';
+import Loader from '../ui/loader/Loader';
 
 export default function ReceivablesPage() {
-  const [receivables, setReceivables] = useState<Receivables[]>([]);
-  useEffect(() => {
-    getReceivables();
-  }, []);
+  const dispatch: AppDispatch = useDispatch();
+  const { receivables, isLoading } = useSelector(
+    (state: RootState) => state.receivables
+  );
 
-  const getReceivables = async () => {
-    try {
-      const data = await getReceivablesApi();
-      setReceivables(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  useEffect(() => {
+    dispatch(fetchReceivables());
+  }, [dispatch]);
 
   return (
     <div>
-      <TableReceivables data={receivables} />
+      {isLoading ? <Loader /> : <TableReceivables data={receivables} />}
     </div>
   );
 }

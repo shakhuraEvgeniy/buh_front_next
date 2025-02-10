@@ -1,8 +1,8 @@
 import { MAIN_URL } from '@/app/utils/constants';
-import { Accounts } from '@/app/utils/definitions';
 import { checkResponse } from '@/app/utils/api/checkResponse';
+import { IAccounts } from '@/app/lib/store/models/IAccount';
 
-export const getAccountsApi = async (): Promise<Accounts> => {
+export const getAccountsApi = async (): Promise<IAccounts> => {
   try {
     const res = await fetch(`${MAIN_URL}/account/accounts`, {
       method: 'GET',
@@ -18,7 +18,7 @@ export const transferAccountApi = async (
   startIdAccount: number,
   finishIdAccount: number,
   sum: number
-): Promise<Accounts> => {
+): Promise<IAccounts> => {
   try {
     const res = await fetch(`${MAIN_URL}/account/transfer`, {
       method: 'PUT',

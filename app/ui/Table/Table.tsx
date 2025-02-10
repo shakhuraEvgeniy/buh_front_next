@@ -1,8 +1,13 @@
 import React from 'react';
-import { CostAndIncome } from '@/app/utils/definitions';
 import stayles from '@/app/ui/Table/Table.module.css';
+import { ICostAndIncome } from '@/app/lib/store/models/ICostAndIncome';
 
-const Table = ({ data }: { data: CostAndIncome[] }) => {
+interface ITableProps {
+  data: ICostAndIncome[];
+  handleClickItem: (item: ICostAndIncome) => void;
+}
+
+const Table = ({ data, handleClickItem }: ITableProps) => {
   const formatNumber = (number: number) => {
     return number.toLocaleString('ru-RU', {
       style: 'currency',
@@ -28,7 +33,7 @@ const Table = ({ data }: { data: CostAndIncome[] }) => {
       acc[date].push(item);
       return acc;
     },
-    {} as Record<string, CostAndIncome[]>
+    {} as Record<string, ICostAndIncome[]>
   );
 
   return (
@@ -52,7 +57,7 @@ const Table = ({ data }: { data: CostAndIncome[] }) => {
                 </td>
               </tr>
               {groupedData[date].map((item) => (
-                <tr key={item.id}>
+                <tr key={item.id} onClick={() => handleClickItem(item)}>
                   <td>{item.account}</td>
                   <td className={stayles.number}>
                     {formatNumber(Number(item.sum))}

@@ -1,13 +1,14 @@
 'use client';
-import { Account, Category } from '@/app/utils/definitions';
+import { IAccount } from '@/app/lib/store/models/IAccount';
+import { ICategory } from '@/app/lib/store/models/ICategory';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
 interface FormAddCostAndIncomeProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleChangeCategory: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  categorys: Category[];
-  subCategorys: Category[];
-  accounts: Account[];
+  categorys: ICategory[];
+  subCategorys: ICategory[];
+  accounts: IAccount[];
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -21,7 +22,9 @@ interface FormAddCostAndIncomeProps {
   };
   isValid: boolean;
   title: string;
-  handleCancel: () => void;
+  handleCancel: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  submitName: string;
+  children?: React.ReactNode;
 }
 
 export default function FormAddCostAndIncome({
@@ -35,6 +38,8 @@ export default function FormAddCostAndIncome({
   values,
   isValid,
   title,
+  submitName,
+  children,
 }: FormAddCostAndIncomeProps) {
   return (
     <div className={styles.form}>
@@ -134,14 +139,15 @@ export default function FormAddCostAndIncome({
           disabled={!isValid}
           type="submit"
         >
-          Добавить
+          {submitName}
         </button>
         <button
           className={`${styles.button} ${styles['button_cansel']}`}
           onClick={handleCancel}
         >
-          Закрыть
+          Отменить
         </button>
+        <div>{children}</div>
       </form>
     </div>
   );

@@ -41,10 +41,10 @@ const TableReceivables = ({ data }: receivablesProps) => {
                 <tr key={item.id}>
                   <td>{item.debtor}</td>
                   <td className={stayles.number}>
-                    {formatNumber(Number(item.amount_of_debt))}
+                    {formatNumber(item.amount_of_debt)}
                   </td>
                   <td className={stayles.number}>
-                    {formatNumber(Number(item.funds_repaid))}
+                    {formatNumber(item.funds_repaid)}
                   </td>
                   <td>{formatDate(item.create_time)}</td>
                   <td>{item.debt_repaid === true ? 'Да' : 'Нет'}</td>

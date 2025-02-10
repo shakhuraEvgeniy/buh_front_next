@@ -1,49 +1,31 @@
 'use client';
-import { Report } from '../utils/definitions';
-import { getReportCostApi, getReportIncomeApi } from '../utils/api/reports';
 import TableReport from './tableReport';
 import { getCurrentDateTime } from '../utils/getDate';
 import { useFormWithValidation } from '../hooks/useFormWithValidation';
-import { useState } from 'react';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+import { AppDispatch, RootState } from '../lib/store/store';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  fetchCostReport,
+  fetchIncomeReport,
+} from '../lib/store/reducers/reportSlice';
 
 export default function Reports() {
-  const [costReport, setCostReport] = useState<Report>({
-    categorys: [],
-    sum: '0',
-  });
-  const [incomeReport, setIncomeReport] = useState<Report>({
-    categorys: [],
-    sum: '0',
-  });
+  const dispatch: AppDispatch = useDispatch();
+  const { incomeReport, costReport } = useSelector(
+    (state: RootState) => state.reports
+  );
+
   const { values, handleChange, isValid } = useFormWithValidation({
     startDate: getCurrentDateTime().slice(0, 10),
     stopDate: getCurrentDateTime().slice(0, 10),
   });
 
-  const getCostReport = async (startDate: Date, stopDate: Date) => {
-    try {
-      const data = await getReportCostApi(startDate, stopDate);
-      setCostReport(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getIncomeReport = async (startDate: Date, stopDate: Date) => {
-    try {
-      const data = await getReportIncomeApi(startDate, stopDate);
-      setIncomeReport(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      getCostReport(values.startDate, values.stopDate);
-      getIncomeReport(values.startDate, values.stopDate);
+      dispatch(fetchCostReport((values.startDate, values.stopDate)));
+      dispatch(fetchIncomeReport((values.startDate, values.stopDate)));
     } catch (e) {
       console.log(e);
     }
