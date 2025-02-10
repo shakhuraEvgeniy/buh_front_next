@@ -35,7 +35,6 @@ export default function EditIncomePage({
     (state: RootState) => state.categoryIncome
   );
   const { accounts } = useSelector((state: RootState) => state.accounts);
-  console.log('startValues', startValues);
 
   const { values, setValue, handleChange, isValid } = useFormWithValidation({
     sum: startValues?.sum || 0,
@@ -90,10 +89,10 @@ export default function EditIncomePage({
         `${values.createTime}T${getCurrentDateTime().slice(11)}`
       );
       const subCategoryId =
-        values.subCategoryId === '0' ? null : Number(values.subCategoryId);
+        Number(values.subCategoryId) === 0 ? null : Number(values.subCategoryId);
       await dispatch(
         fetchUpdateIncome({
-          incomeId: Number(values.incomeId),
+          incomeId: Number(id),
           accountId: Number(values.accountId),
           createTime: createTimeWithTime,
           sum: Number(values.sum),

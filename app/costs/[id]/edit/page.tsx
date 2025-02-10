@@ -89,7 +89,7 @@ export default function EditCostPage({
         `${values.createTime}T${getCurrentDateTime().slice(11)}`
       );
       const subCategoryId =
-        values.subCategoryId === '0' ? null : Number(values.subCategoryId);
+        Number(values.subCategoryId) === 0 ? null : Number(values.subCategoryId);
       await dispatch(
         fetchUpdateCost({
           costId: Number(id),
