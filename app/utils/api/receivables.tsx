@@ -1,8 +1,8 @@
-import { Receivables } from '@/app/utils/definitions';
 import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
+import { IReceivable } from '@/app/lib/store/models/IReceivables';
 
-export const getReceivablesApi = async (): Promise<Receivables[]> => {
+export const getReceivablesApi = async (): Promise<IReceivable[]> => {
   try {
     const res = await fetch(`${MAIN_URL}/receivables/getReceivables`, {
       method: 'GET',

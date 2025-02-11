@@ -1,6 +1,6 @@
 'use client';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import {
   fetchCategorysIncome,
   fetchSubCategorysIncome,
@@ -13,20 +13,14 @@ import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
-interface Params {
-  id: string;
-}
+type Params = Promise<{ id: string }>
 
-export default function EditIncomePage({
-  params,
-}: {
-  params: React.Usable<Params>;
-}) {
-  const { id } = React.use<Params>(params);
+export default function EditIncomePage(props: { params: Params }) {
+  const { id } = use(props.params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const { incomes } = useSelector((state: RootState) => state.incomes);

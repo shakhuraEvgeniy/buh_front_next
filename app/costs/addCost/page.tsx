@@ -10,7 +10,7 @@ import {
   fetchCategorysCost,
   fetchSubCategorysCost,
 } from '@/app/lib/store/reducers/costCategorySlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
 
 export default function AddCosts() {

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import accountSlice from '@/app/lib/store/reducers/accoutSlice';
+import accountSlice from '@/app/lib/store/reducers/accountSlice';
 import incomeCategorySlice from '@/app/lib/store/reducers/incomeCategorySlice';
 import incomeSlice from './reducers/incomesSlice';
 import costSlice from './reducers/costsSlice';

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchAccounts,
   fetchTransfer,
-} from '@/app/lib/store/reducers/accoutSlice';
+} from '@/app/lib/store/reducers/accountSlice';
 
 export default function Transfer() {
   const router = useRouter();
