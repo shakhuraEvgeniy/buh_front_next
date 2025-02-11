@@ -1,8 +1,8 @@
-import { Receivables } from '@/app/utils/definitions';
+import { IReceivable } from '@/app/lib/store/models/IReceivables';
 import stayles from '@/app/ui/Table/Table.module.css';
 
 interface receivablesProps {
-  data: Receivables[];
+  data: IReceivable[];
 }
 
 const TableReceivables = ({ data }: receivablesProps) => {
@@ -36,7 +36,7 @@ const TableReceivables = ({ data }: receivablesProps) => {
         </thead>
         <tbody>
           {data &&
-            data.map((item: Receivables) => {
+            data.map((item: IReceivable) => {
               return (
                 <tr key={item.id}>
                   <td>{item.debtor}</td>

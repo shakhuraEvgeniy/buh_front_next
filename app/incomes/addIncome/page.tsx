@@ -5,7 +5,7 @@ import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
-import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import {
   fetchCategorysIncome,
   fetchSubCategorysIncome,

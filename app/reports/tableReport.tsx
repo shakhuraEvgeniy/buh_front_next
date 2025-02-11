@@ -1,11 +1,11 @@
-import { Report, ItemReports } from '@/app/utils/definitions';
+import { IReport, IItemReports } from '@/app/lib/store/models/IReport';
 import stayles from '@/app/ui/Table/Table.module.css';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 interface recordProps {
-  data: Report;
+  data: IReport;
   title: string;
 }
 
@@ -18,10 +18,10 @@ const TableReport = ({ data, title }: recordProps) => {
   };
 
   const chartData = {
-    labels: data.categorys.map((item: ItemReports) => item.category),
+    labels: data.categorys.map((item: IItemReports) => item.category),
     datasets: [
       {
-        data: data.categorys.map((item: ItemReports) => Number(item.sum)),
+        data: data.categorys.map((item: IItemReports) => Number(item.sum)),
         backgroundColor: [
           '#FF6384',
           '#36A2EB',
@@ -55,7 +55,7 @@ const TableReport = ({ data, title }: recordProps) => {
           </thead>
           <tbody>
             {data.categorys &&
-              data.categorys.map((item: ItemReports, index: number) => {
+              data.categorys.map((item: IItemReports, index: number) => {
                 return (
                   <tr key={index}>
                     <td>{item.category}</td>

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { useRouter } from 'next/navigation';
@@ -14,19 +14,13 @@ import {
   fetchDeleteCost,
   fetchUpdateCost,
 } from '@/app/lib/store/reducers/costsSlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accoutSlice';
+import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
-interface Params {
-  id: string;
-}
+type Params = Promise<{ id: string }>
 
-export default function EditCostPage({
-  params,
-}: {
-  params: React.Usable<Params>;
-}) {
-  const { id } = React.use<Params>(params);
+export default function EditCostPage(props: { params: Params }) {
+  const { id } = use(props.params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const { costs } = useSelector((state: RootState) => state.costs);
