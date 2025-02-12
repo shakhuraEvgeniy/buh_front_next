@@ -24,8 +24,8 @@ export default function Reports() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      dispatch(fetchCostReport((values.startDate, values.stopDate)));
-      dispatch(fetchIncomeReport((values.startDate, values.stopDate)));
+      dispatch(fetchCostReport({ startDate: values.startDate, stopDate: values.stopDate }));
+      dispatch(fetchIncomeReport({ startDate: values.startDate, stopDate: values.stopDate }));
     } catch (e) {
       console.log(e);
     }
