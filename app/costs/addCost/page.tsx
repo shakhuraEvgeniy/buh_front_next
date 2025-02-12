@@ -20,6 +20,7 @@ export default function AddCosts() {
     (state: RootState) => state.categoryCost
   );
   const { accounts } = useSelector((state: RootState) => state.accounts);
+  const { isLoading } = useSelector((state: RootState) => state.costs);
 
   const { values, setValue, handleChange, isValid, resetForm } =
     useFormWithValidation({
@@ -104,6 +105,7 @@ export default function AddCosts() {
       isValid={isValid}
       title="Добавить расход"
       submitName="Добавить"
+      isLoading={isLoading}
     />
   );
 }

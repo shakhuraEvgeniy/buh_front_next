@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useSelector } from 'react-redux';
 import { fetchReceivables } from '../lib/store/reducers/receivablesSlice';
-import Loader from '../ui/loader/Loader';
+import LoaderPage from '../ui/loaders/Loader__page';
 
 export default function ReceivablesPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -19,7 +19,7 @@ export default function ReceivablesPage() {
 
   return (
     <div>
-      {isLoading ? <Loader /> : <TableReceivables data={receivables} />}
+      {isLoading ? <LoaderPage /> : <TableReceivables data={receivables} />}
     </div>
   );
 }

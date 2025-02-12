@@ -6,7 +6,7 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCosts } from '../lib/store/reducers/costsSlice';
-import Loader from '../ui/loader/Loader';
+import LoaderPage from '../ui/loaders/Loader__page';
 import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
 import { useRouter } from 'next/navigation';
 
@@ -43,7 +43,7 @@ export default function Costs() {
         <button className={stayles.addButton}>Добавить расход</button>
       </Link>
       {isLoading ? (
-        <Loader />
+        <LoaderPage />
       ) : (
         <Table data={costs} handleClickItem={handleClickItem} />
       )}

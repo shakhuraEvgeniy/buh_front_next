@@ -6,7 +6,7 @@ import styles from '@/app/ui/Table/Table.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import { AppDispatch, RootState } from '../lib/store/store';
-import Loader from '../ui/loader/Loader';
+import LoaderPage from '../ui/loaders/Loader__page';
 
 export default function AccountsPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function AccountsPage() {
       <Link className={styles.link} href="/accounts/transfer">
         <button className={styles.addButton}>Перенос средств</button>
       </Link>
-      {isLoading ? <Loader /> : <TableAccounts data={accounts} />}
+      {isLoading ? <LoaderPage /> : <TableAccounts data={accounts} />}
     </>
   );
 }

@@ -6,7 +6,7 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIncomes } from '../lib/store/reducers/incomesSlice';
-import Loader from '../ui/loader/Loader';
+import LoaderPage from '../ui/loaders/Loader__page';
 import { useRouter } from 'next/navigation';
 import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
 
@@ -45,7 +45,7 @@ export default function Incomes() {
         <button className={stayles.addButton}>Добавить доход</button>
       </Link>
       {isLoading ? (
-        <Loader />
+        <LoaderPage />
       ) : (
         <Table data={incomes} handleClickItem={handleClickItem} />
       )}
