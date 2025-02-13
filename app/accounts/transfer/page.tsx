@@ -24,7 +24,7 @@ export default function Transfer() {
   });
 
   useEffect(() => {
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
   }, [dispatch]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
