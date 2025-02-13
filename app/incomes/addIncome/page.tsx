@@ -34,7 +34,7 @@ export default function AddIncome() {
 
   useEffect(() => {
     dispatch(fetchCategorysIncome());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
   }, [dispatch]);
 
   useEffect(() => {

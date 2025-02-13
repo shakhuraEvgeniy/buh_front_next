@@ -45,7 +45,7 @@ export default function EditIncomePage(props: { params: Params }) {
 
   useEffect(() => {
     dispatch(fetchCategorysIncome());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
     if (values.categoryId > 0) {
       dispatch(fetchSubCategorysIncome(Number(values.categoryId)));
     }

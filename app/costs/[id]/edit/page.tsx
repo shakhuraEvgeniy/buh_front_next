@@ -43,7 +43,7 @@ export default function EditCostPage(props: { params: Params }) {
 
   useEffect(() => {
     dispatch(fetchCategorysCost());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
     if (values.categoryId > 0) {
       dispatch(fetchSubCategorysCost(Number(values.categoryId)));
     }

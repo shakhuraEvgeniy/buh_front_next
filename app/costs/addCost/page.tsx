@@ -34,7 +34,7 @@ export default function AddCosts() {
 
   useEffect(() => {
     dispatch(fetchCategorysCost());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
   }, [dispatch]);
 
   useEffect(() => {

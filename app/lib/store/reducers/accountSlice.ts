@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAccounts } from '../models/IAccount';
+import { IAccountFilters, IAccounts, IAccountSort } from '../models/IAccount';
 import { getAccountsApi, transferAccountApi } from '@/app/utils/api/accounts';
+import { sortType } from '../../filters/account/sortTtype';
 
 interface AccountState {
   accounts: IAccounts;
+  sort: IAccountSort;
+  filter: IAccountFilters[];
   isLoading: boolean;
   error: string;
 }
 
 export const fetchAccounts = createAsyncThunk(
   'accounts/fetchAccounts',
-  async () => {
-    const response = await getAccountsApi();
+  async (sort: IAccountSort) => {
+    const response = await getAccountsApi(sort);
     return response;
   }
 );
@@ -34,6 +37,8 @@ export const fetchTransfer = createAsyncThunk(
 
 const initialState: AccountState = {
   accounts: { accounts: [], sum: 0 },
+  sort: 'all',
+  filter: sortType,
   isLoading: false,
   error: '',
 };
@@ -41,7 +46,11 @@ const initialState: AccountState = {
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {},
+  reducers: {
+    changeFilter(state, action) {
+      state.sort = action.payload.sort;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAccounts.pending, (state) => {
@@ -74,3 +83,5 @@ export const accountSlice = createSlice({
 });
 
 export default accountSlice.reducer;
+
+export const { changeFilter } = accountSlice.actions;
