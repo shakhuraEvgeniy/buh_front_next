@@ -2,7 +2,9 @@ import { MAIN_URL } from '@/app/utils/constants';
 import { checkResponse } from '@/app/utils/api/checkResponse';
 import { IAccounts, IAccountSort } from '@/app/lib/store/models/IAccount';
 
-export const getAccountsApi = async (sort: IAccountSort): Promise<IAccounts> => {
+export const getAccountsApi = async (
+  sort: IAccountSort
+): Promise<IAccounts> => {
   try {
     const res = await fetch(`${MAIN_URL}/account/accounts?sort=${sort}`, {
       method: 'GET',

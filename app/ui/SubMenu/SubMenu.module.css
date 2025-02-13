@@ -1,0 +1,8 @@
+.subMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 35px;
+  margin-bottom: 8px;
+}
