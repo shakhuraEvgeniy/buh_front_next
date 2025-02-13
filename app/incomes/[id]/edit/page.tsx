@@ -17,13 +17,15 @@ import React, { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
-type Params = Promise<{ id: string }>
+type Params = Promise<{ id: string }>;
 
 export default function EditIncomePage(props: { params: Params }) {
   const { id } = use(props.params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { incomes } = useSelector((state: RootState) => state.incomes);
+  const { incomes, isLoading } = useSelector(
+    (state: RootState) => state.incomes
+  );
   const startValues = incomes.find((item) => item.id === Number(id));
   const { categorys, subCategorys } = useSelector(
     (state: RootState) => state.categoryIncome
@@ -43,7 +45,7 @@ export default function EditIncomePage(props: { params: Params }) {
 
   useEffect(() => {
     dispatch(fetchCategorysIncome());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
     if (values.categoryId > 0) {
       dispatch(fetchSubCategorysIncome(Number(values.categoryId)));
     }
@@ -83,7 +85,9 @@ export default function EditIncomePage(props: { params: Params }) {
         `${values.createTime}T${getCurrentDateTime().slice(11)}`
       );
       const subCategoryId =
-        Number(values.subCategoryId) === 0 ? null : Number(values.subCategoryId);
+        Number(values.subCategoryId) === 0
+          ? null
+          : Number(values.subCategoryId);
       await dispatch(
         fetchUpdateIncome({
           incomeId: Number(id),
@@ -103,7 +107,6 @@ export default function EditIncomePage(props: { params: Params }) {
 
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('delete');
 
     try {
       await dispatch(fetchDeleteIncome(Number(id)));
@@ -126,6 +129,7 @@ export default function EditIncomePage(props: { params: Params }) {
       isValid={isValid}
       title="Изменение дохода"
       submitName="Изменить"
+      isLoading={isLoading}
     >
       <button
         className={`${styles.button} ${styles['button_delete']}`}

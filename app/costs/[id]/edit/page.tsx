@@ -17,13 +17,13 @@ import {
 import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 
-type Params = Promise<{ id: string }>
+type Params = Promise<{ id: string }>;
 
 export default function EditCostPage(props: { params: Params }) {
   const { id } = use(props.params);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { costs } = useSelector((state: RootState) => state.costs);
+  const { costs, isLoading } = useSelector((state: RootState) => state.costs);
   const { categorys, subCategorys } = useSelector(
     (state: RootState) => state.categoryCost
   );
@@ -43,7 +43,7 @@ export default function EditCostPage(props: { params: Params }) {
 
   useEffect(() => {
     dispatch(fetchCategorysCost());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
     if (values.categoryId > 0) {
       dispatch(fetchSubCategorysCost(Number(values.categoryId)));
     }
@@ -83,7 +83,9 @@ export default function EditCostPage(props: { params: Params }) {
         `${values.createTime}T${getCurrentDateTime().slice(11)}`
       );
       const subCategoryId =
-        Number(values.subCategoryId) === 0 ? null : Number(values.subCategoryId);
+        Number(values.subCategoryId) === 0
+          ? null
+          : Number(values.subCategoryId);
       await dispatch(
         fetchUpdateCost({
           costId: Number(id),
@@ -124,6 +126,7 @@ export default function EditCostPage(props: { params: Params }) {
       isValid={isValid}
       title="Изменение расхода"
       submitName="Изменить"
+      isLoading={isLoading}
     >
       <button
         className={`${styles.button} ${styles['button_delete']}`}

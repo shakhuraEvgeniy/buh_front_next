@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function AddIncome() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
+  const { isLoading } = useSelector((state: RootState) => state.incomes);
   const { categorys, subCategorys } = useSelector(
     (state: RootState) => state.categoryIncome
   );
@@ -33,7 +34,7 @@ export default function AddIncome() {
 
   useEffect(() => {
     dispatch(fetchCategorysIncome());
-    dispatch(fetchAccounts());
+    dispatch(fetchAccounts('all'));
   }, [dispatch]);
 
   useEffect(() => {
@@ -104,6 +105,7 @@ export default function AddIncome() {
       isValid={isValid}
       title="Добавить доход"
       submitName="Добавить"
+      isLoading={isLoading}
     />
   );
 }

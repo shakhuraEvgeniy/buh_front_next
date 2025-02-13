@@ -2,6 +2,7 @@
 import { IAccount } from '@/app/lib/store/models/IAccount';
 import { ICategory } from '@/app/lib/store/models/ICategory';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+import LoaderButton from '../loaders/Loader__button';
 
 interface FormAddCostAndIncomeProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -24,6 +25,7 @@ interface FormAddCostAndIncomeProps {
   title: string;
   handleCancel: (event: React.MouseEvent<HTMLButtonElement>) => void;
   submitName: string;
+  isLoading: boolean;
   children?: React.ReactNode;
 }
 
@@ -39,6 +41,7 @@ export default function FormAddCostAndIncome({
   isValid,
   title,
   submitName,
+  isLoading,
   children,
 }: FormAddCostAndIncomeProps) {
   return (
@@ -139,7 +142,7 @@ export default function FormAddCostAndIncome({
           disabled={!isValid}
           type="submit"
         >
-          {submitName}
+          {isLoading ? <LoaderButton /> : submitName}
         </button>
         <button
           className={`${styles.button} ${styles['button_cansel']}`}

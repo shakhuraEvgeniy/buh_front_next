@@ -1,6 +1,6 @@
 .nav_link {
   display: flex;
-  height: 48px;
+  height: 10px;
   align-items: center;
   justify-content: center;
   gap: 2px; /* Примерное значение для gap-2 */
@@ -23,6 +23,8 @@
   flex-direction: row;
   justify-content: space-between;
   gap: 2px; /* Примерное значение для space-x-2 */
+  overflow-x: auto;
+  white-space: nowrap;
 }
 .sidenav_1 {
   display: none; /* hidden */
@@ -36,8 +38,8 @@
   flex-direction: column; /* flex-col */
   padding-left: 0.75rem; /* px-3 */
   padding-right: 0.75rem; /* px-3 */
-  padding-top: 1rem; /* py-4 */
-  padding-bottom: 1rem; /* py-4 */
+  padding-top: 10px; /* py-4 */
+  padding-bottom: 10px; /* py-4 */
 }
 
 .nav_link_actiev {

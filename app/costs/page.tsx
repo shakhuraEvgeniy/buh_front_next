@@ -3,10 +3,11 @@ import Table from '@/app/ui/Table/Table';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import stayles from '@/app/ui/Table/Table.module.css';
+import stylesSubMenu from '@/app/ui/SubMenu/SubMenu.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCosts } from '../lib/store/reducers/costsSlice';
-import Loader from '../ui/loader/Loader';
+import LoaderPage from '../ui/loaders/Loader__page';
 import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
 import { useRouter } from 'next/navigation';
 
@@ -39,11 +40,13 @@ export default function Costs() {
 
   return (
     <>
-      <Link className={stayles.link} href="/costs/addCost">
-        <button className={stayles.addButton}>Добавить расход</button>
-      </Link>
+      <div className={stylesSubMenu.subMenu}>
+        <Link className={stayles.link} href="/costs/addCost">
+          <button className={stayles.addButton}>Добавить расход</button>
+        </Link>
+      </div>
       {isLoading ? (
-        <Loader />
+        <LoaderPage />
       ) : (
         <Table data={costs} handleClickItem={handleClickItem} />
       )}
