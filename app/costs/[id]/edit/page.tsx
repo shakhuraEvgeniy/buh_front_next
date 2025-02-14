@@ -6,16 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import {
-  fetchDeleteCost,
-  fetchUpdateCost,
-} from '@/app/lib/store/reducers/costsSlice';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { fetchAccounts } from '@/app/lib/store/api/accounts';
 import {
   fetchCategorysCost,
   fetchSubCategorysCost,
 } from '@/app/lib/store/api/categorys';
+import { fetchDeleteCost, fetchUpdateCost } from '@/app/lib/store/api/costs';
 
 type Params = Promise<{ id: string }>;
 
