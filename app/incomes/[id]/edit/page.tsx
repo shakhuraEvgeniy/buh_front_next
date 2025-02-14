@@ -1,9 +1,5 @@
 'use client';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import {
-  fetchDeleteIncome,
-  fetchUpdateIncome,
-} from '@/app/lib/store/reducers/incomesSlice';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { getCurrentDateTime } from '@/app/utils/getDate';
@@ -16,6 +12,7 @@ import {
   fetchCategorysIncome,
   fetchSubCategorysIncome,
 } from '@/app/lib/store/api/categorys';
+import { fetchDeleteIncome, fetchUpdateIncome } from '@/app/lib/store/api/incomes';
 
 type Params = Promise<{ id: string }>;
 

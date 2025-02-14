@@ -5,13 +5,13 @@ import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
 import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
-import { fetchAddIncome } from '@/app/lib/store/reducers/incomesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccounts } from '@/app/lib/store/api/accounts';
 import {
   fetchCategorysIncome,
   fetchSubCategorysIncome,
 } from '@/app/lib/store/api/categorys';
+import { fetchAddIncome } from '@/app/lib/store/api/incomes';
 
 export default function AddIncome() {
   const router = useRouter();

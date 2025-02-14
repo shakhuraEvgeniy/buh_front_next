@@ -1,53 +1,17 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ICostAndIncome } from '../models/ICostAndIncome';
 import {
-  IAddCostAndIncome,
-  ICostAndIncome,
-  IUpdateIncome,
-} from '../models/ICostAndIncome';
-import {
-  addIncomeApi,
-  deleteIncomeApi,
-  getIncomesApi,
-  updateIncomeApi,
-} from '@/app/utils/api/incomes';
+  fetchAddIncome,
+  fetchDeleteIncome,
+  fetchIncomes,
+  fetchUpdateIncome,
+} from '@/app/lib/store/api/incomes';
 
 interface IncomeState {
   incomes: ICostAndIncome[];
   isLoading: boolean;
   error: string;
 }
-
-export const fetchIncomes = createAsyncThunk(
-  'incomes/fetchIncomes',
-  async (limit: number) => {
-    const response = await getIncomesApi(limit);
-    return response;
-  }
-);
-
-export const fetchAddIncome = createAsyncThunk(
-  'incomes/fetchAddIncome',
-  async (income: IAddCostAndIncome) => {
-    const response = await addIncomeApi(income);
-    return response;
-  }
-);
-
-export const fetchUpdateIncome = createAsyncThunk(
-  'incomes/fetchUpdateIncome',
-  async (income: IUpdateIncome) => {
-    const response = await updateIncomeApi(income);
-    return response;
-  }
-);
-
-export const fetchDeleteIncome = createAsyncThunk(
-  'incomes/fetchDeleteIncome',
-  async (incomeId: number) => {
-    const response = await deleteIncomeApi(incomeId);
-    return response;
-  }
-);
 
 const initialState: IncomeState = {
   incomes: [],

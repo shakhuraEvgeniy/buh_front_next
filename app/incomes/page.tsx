@@ -6,10 +6,10 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import stylesSubMenu from '@/app/ui/SubMenu/SubMenu.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchIncomes } from '../lib/store/reducers/incomesSlice';
 import LoaderPage from '../ui/loaders/Loader__page';
 import { useRouter } from 'next/navigation';
 import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
+import { fetchIncomes } from '../lib/store/api/incomes';
 
 export default function Incomes() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function Incomes() {
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
+      document.documentElement.offsetHeight ||
       isLoading
     )
       return;
