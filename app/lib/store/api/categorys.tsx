@@ -1,5 +1,5 @@
-import { MAIN_URL } from '@/app/utils/constants';
-import { checkResponse } from '@/app/utils/api/checkResponse';
+import { MAIN_URL } from '@/app/lib/constants';
+import { checkResponse } from '@/app/lib/store/api/checkResponse';
 import { ICategory, ISubCategory } from '@/app/lib/store/models/ICategory';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 

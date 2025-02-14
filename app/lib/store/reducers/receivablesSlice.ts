@@ -1,20 +1,12 @@
-import { getReceivablesApi } from '@/app/utils/api/receivables';
+import { fetchReceivables } from '@/app/lib/store/api/receivables';
 import { IReceivable } from '../models/IReceivables';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface ReceivableState {
   receivables: IReceivable[];
   isLoading: boolean;
   error: string;
 }
-
-export const fetchReceivables = createAsyncThunk(
-  'receivables/fetchReceivables',
-  async () => {
-    const response = await getReceivablesApi();
-    return response;
-  }
-);
 
 const initialState: ReceivableState = {
   receivables: [],

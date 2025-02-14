@@ -29,7 +29,7 @@ export default function Incomes() {
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight ||
+        document.documentElement.offsetHeight ||
       isLoading
     )
       return;

@@ -1,14 +1,11 @@
 'use client';
 import TableReport from './tableReport';
-import { getCurrentDateTime } from '../utils/getDate';
-import { useFormWithValidation } from '../hooks/useFormWithValidation';
+import { getCurrentDateTime } from '../lib/utils/getDate';
+import { useFormWithValidation } from '../lib/hooks/useFormWithValidation';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchCostReport,
-  fetchIncomeReport,
-} from '../lib/store/reducers/reportSlice';
+import { fetchCostReport, fetchIncomeReport } from '../lib/store/api/reports';
 
 export default function Reports() {
   const dispatch: AppDispatch = useDispatch();
