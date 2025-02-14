@@ -6,12 +6,12 @@ import { getCurrentDateTime } from '@/app/utils/getDate';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 import {
   fetchCategorysCost,
   fetchSubCategorysCost,
-} from '@/app/lib/store/reducers/costCategorySlice';
-import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
-import { fetchAccounts } from '@/app/lib/store/api/accounts';
+} from '@/app/lib/store/api/categorys';
 
 export default function AddCosts() {
   const router = useRouter();
