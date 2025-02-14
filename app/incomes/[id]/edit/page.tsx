@@ -1,6 +1,5 @@
 'use client';
 import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import {
   fetchCategorysIncome,
   fetchSubCategorysIncome,
@@ -16,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import React, { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 
 type Params = Promise<{ id: string }>;
 

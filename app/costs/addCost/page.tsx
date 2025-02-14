@@ -10,8 +10,8 @@ import {
   fetchCategorysCost,
   fetchSubCategorysCost,
 } from '@/app/lib/store/reducers/costCategorySlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 
 export default function AddCosts() {
   const router = useRouter();

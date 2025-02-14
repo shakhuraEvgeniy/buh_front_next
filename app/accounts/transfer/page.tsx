@@ -5,10 +5,7 @@ import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchAccounts,
-  fetchTransfer,
-} from '@/app/lib/store/reducers/accountSlice';
+import { fetchAccounts, fetchTransfer } from '@/app/lib/store/api/accounts';
 
 export default function Transfer() {
   const router = useRouter();

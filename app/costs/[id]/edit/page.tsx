@@ -14,8 +14,8 @@ import {
   fetchDeleteCost,
   fetchUpdateCost,
 } from '@/app/lib/store/reducers/costsSlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 
 type Params = Promise<{ id: string }>;
 

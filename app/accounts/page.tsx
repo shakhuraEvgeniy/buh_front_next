@@ -5,10 +5,10 @@ import Link from 'next/link';
 import styles from '@/app/ui/Table/Table.module.css';
 import stylesSubMenu from '@/app/ui/SubMenu/SubMenu.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
 import { AppDispatch, RootState } from '../lib/store/store';
 import LoaderPage from '../ui/loaders/Loader__page';
 import Filter from '../ui/Filter/Filter';
+import { fetchAccounts } from '../lib/store/api/accounts';
 
 export default function AccountsPage() {
   const dispatch: AppDispatch = useDispatch();
