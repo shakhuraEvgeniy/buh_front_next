@@ -1,25 +1,18 @@
 import { IReceivable } from '@/app/lib/store/models/IReceivables';
 import stayles from '@/app/ui/Table/Table.module.css';
+import { formatDate } from '../lib/utils/date';
+import { formatSumm } from '../lib/utils/formatSumm';
+import { useRouter } from 'next/navigation';
 
 interface receivablesProps {
   data: IReceivable[];
 }
 
 const TableReceivables = ({ data }: receivablesProps) => {
-  const formatNumber = (number: number) => {
-    return number.toLocaleString('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-    });
-  };
+  const router = useRouter();
 
-  const formatDate = (dateString: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: '2-digit',
-      year: '2-digit',
-    };
-    return new Date(dateString).toLocaleDateString('ru-RU', options);
+  const handleClickItem = (item: IReceivable) => {
+    router.push(`/receivables/${item.id}/refunds`);
   };
 
   return (
@@ -38,13 +31,13 @@ const TableReceivables = ({ data }: receivablesProps) => {
           {data &&
             data.map((item: IReceivable) => {
               return (
-                <tr key={item.id}>
+                <tr key={item.id} onClick={() => handleClickItem(item)}>
                   <td>{item.debtor}</td>
                   <td className={stayles.number}>
-                    {formatNumber(item.amount_of_debt)}
+                    {formatSumm(item.amount_of_debt)}
                   </td>
                   <td className={stayles.number}>
-                    {formatNumber(item.funds_repaid)}
+                    {formatSumm(item.funds_repaid)}
                   </td>
                   <td>{formatDate(item.create_time)}</td>
                   <td>{item.debt_repaid === true ? 'Да' : 'Нет'}</td>

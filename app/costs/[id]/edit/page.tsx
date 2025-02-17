@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentDateTime } from '@/app/lib/utils/getDate';
+import { getCurrentDateTime } from '@/app/lib/utils/date';
 import { useFormWithValidation } from '@/app/lib/hooks/useFormWithValidation';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { fetchAccounts } from '@/app/lib/store/api/accounts';

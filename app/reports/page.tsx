@@ -1,6 +1,6 @@
 'use client';
 import TableReport from './tableReport';
-import { getCurrentDateTime } from '../lib/utils/getDate';
+import { getCurrentDateTime } from '../lib/utils/date';
 import { useFormWithValidation } from '../lib/hooks/useFormWithValidation';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';

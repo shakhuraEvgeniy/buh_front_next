@@ -3,6 +3,7 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { formatSumm } from '../lib/utils/formatSumm';
 
 interface recordProps {
   data: IReport;
@@ -10,12 +11,6 @@ interface recordProps {
 }
 
 const TableReport = ({ data, title }: recordProps) => {
-  const formatNumber = (number: number) => {
-    return number.toLocaleString('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-    });
-  };
 
   const chartData = {
     labels: data.categorys.map((item: IItemReports) => item.category),
@@ -60,7 +55,7 @@ const TableReport = ({ data, title }: recordProps) => {
                   <tr key={index}>
                     <td>{item.category}</td>
                     <td className={stayles.number}>
-                      {formatNumber(Number(item.sum))}
+                      {formatSumm(Number(item.sum))}
                     </td>
                   </tr>
                 );
@@ -73,7 +68,7 @@ const TableReport = ({ data, title }: recordProps) => {
                   Итого:
                 </th>
                 <td className={stayles.number}>
-                  {formatNumber(Number(data.sum))}
+                  {formatSumm(Number(data.sum))}
                 </td>
               </tr>
             )}

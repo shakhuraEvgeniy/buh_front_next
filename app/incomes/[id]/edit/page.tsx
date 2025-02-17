@@ -2,7 +2,7 @@
 import { useFormWithValidation } from '@/app/lib/hooks/useFormWithValidation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
-import { getCurrentDateTime } from '@/app/lib/utils/getDate';
+import { getCurrentDateTime } from '@/app/lib/utils/date';
 import { useRouter } from 'next/navigation';
 import React, { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

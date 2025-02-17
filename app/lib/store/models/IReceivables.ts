@@ -7,3 +7,12 @@ export interface IReceivable {
   account: string;
   debt_repaid: boolean;
 }
+
+export interface IRefund {
+  id: number;
+  create_time: Date;
+  receivable_id: number;
+  sum: number;
+  account_id: number;
+  account: string;
+}
