@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAccountFilters, IAccounts, IAccountSort } from '../models/IAccount';
-import { getAccountsApi, transferAccountApi } from '@/app/utils/api/accounts';
+import { fetchAccounts, fetchTransfer } from '@/app/lib/store/api/accounts';
 import { sortType } from '../../filters/account/sortTtype';
 
 interface AccountState {
@@ -10,30 +10,6 @@ interface AccountState {
   isLoading: boolean;
   error: string;
 }
-
-export const fetchAccounts = createAsyncThunk(
-  'accounts/fetchAccounts',
-  async (sort: IAccountSort) => {
-    const response = await getAccountsApi(sort);
-    return response;
-  }
-);
-
-export const fetchTransfer = createAsyncThunk(
-  'accounts/fetchTransfer',
-  async (data: {
-    startIdAccount: number;
-    finishIdAccount: number;
-    sum: number;
-  }) => {
-    const response = await transferAccountApi(
-      data.startIdAccount,
-      data.finishIdAccount,
-      data.sum
-    );
-    return response;
-  }
-);
 
 const initialState: AccountState = {
   accounts: { accounts: [], sum: 0 },

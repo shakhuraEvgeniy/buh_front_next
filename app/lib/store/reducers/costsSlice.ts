@@ -1,53 +1,17 @@
 import {
-  addCostsApi,
-  deleteCostApi,
-  getCostsApi,
-  updateCostApi,
-} from '@/app/utils/api/costs';
-import {
-  IAddCostAndIncome,
-  ICostAndIncome,
-  IUpdateCost,
-} from '../models/ICostAndIncome';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+  fetchAddCost,
+  fetchCosts,
+  fetchDeleteCost,
+  fetchUpdateCost,
+} from '@/app/lib/store/api/costs';
+import { ICostAndIncome } from '../models/ICostAndIncome';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CostState {
   costs: ICostAndIncome[];
   isLoading: boolean;
   error: string;
 }
-
-export const fetchCosts = createAsyncThunk(
-  'costs/fetchCosts',
-  async (limit: number) => {
-    const response = await getCostsApi(limit);
-    return response;
-  }
-);
-
-export const fetchAddCost = createAsyncThunk(
-  'costs/fetchAddCost',
-  async (cost: IAddCostAndIncome) => {
-    const response = await addCostsApi(cost);
-    return response;
-  }
-);
-
-export const fetchUpdateCost = createAsyncThunk(
-  'costs/fetchUpdateCost',
-  async (cost: IUpdateCost) => {
-    const response = await updateCostApi(cost);
-    return response;
-  }
-);
-
-export const fetchDeleteCost = createAsyncThunk(
-  'costs/fetchDeleteCost',
-  async (costId: number) => {
-    const response = await deleteCostApi(costId);
-    return response;
-  }
-);
 
 const initialState: CostState = {
   costs: [],

@@ -1,6 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPeriod, IReport } from '../models/IReport';
-import { getReportCostApi, getReportIncomeApi } from '@/app/utils/api/reports';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IReport } from '../models/IReport';
+import {
+  fetchCostReport,
+  fetchIncomeReport,
+} from '@/app/lib/store/api/reports';
 
 interface IReportState {
   incomeReport: IReport;
@@ -8,20 +11,6 @@ interface IReportState {
   isLoading: boolean;
   error: string;
 }
-
-export const fetchIncomeReport = createAsyncThunk(
-  'reports/fetchIncomeReport',
-  async (period: IPeriod) => {
-    return await getReportIncomeApi(period);
-  }
-);
-
-export const fetchCostReport = createAsyncThunk(
-  'reports/fetchCostReport',
-  async (period: IPeriod) => {
-    return await getReportCostApi(period);
-  }
-);
 
 const initialState: IReportState = {
   incomeReport: { categorys: [], sum: 0 },

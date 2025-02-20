@@ -1,23 +1,21 @@
-import { getReceivablesApi } from '@/app/utils/api/receivables';
-import { IReceivable } from '../models/IReceivables';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  fetchAddRufund,
+  fetchGetRufunds,
+  fetchReceivables,
+} from '@/app/lib/store/api/receivables';
+import { IReceivable, IRefund } from '../models/IReceivables';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface ReceivableState {
   receivables: IReceivable[];
+  refunds: IRefund[];
   isLoading: boolean;
   error: string;
 }
 
-export const fetchReceivables = createAsyncThunk(
-  'receivables/fetchReceivables',
-  async () => {
-    const response = await getReceivablesApi();
-    return response;
-  }
-);
-
 const initialState: ReceivableState = {
   receivables: [],
+  refunds: [],
   isLoading: false,
   error: '',
 };
@@ -38,7 +36,30 @@ export const receivablesSlice = createSlice({
       })
       .addCase(fetchReceivables.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Failed to fetch receivables';
+        state.error = action.error.message || 'Failed to fetch get receivables';
+      })
+      .addCase(fetchGetRufunds.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchGetRufunds.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.refunds = action.payload;
+      })
+      .addCase(fetchGetRufunds.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to fetch get refunds';
+      })
+      .addCase(fetchAddRufund.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchAddRufund.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchAddRufund.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to fetch add refunds';
       });
   },
 });

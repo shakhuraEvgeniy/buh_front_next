@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICategory, ISubCategory } from '../models/ICategory';
 import {
-  getCategorysCostApi,
-  getSubCategorysCostApi,
-} from '@/app/utils/api/categorys';
+  fetchCategorysCost,
+  fetchSubCategorysCost,
+} from '@/app/lib/store/api/categorys';
 
 interface CategoryState {
   categorys: ICategory[];
@@ -11,22 +11,6 @@ interface CategoryState {
   isLoading: boolean;
   error: string;
 }
-
-export const fetchCategorysCost = createAsyncThunk(
-  'category/fetchCategorysCost',
-  async () => {
-    const response = await getCategorysCostApi();
-    return response;
-  }
-);
-
-export const fetchSubCategorysCost = createAsyncThunk(
-  'category/fetchSubCategorysCost',
-  async (id: number) => {
-    const response = await getSubCategorysCostApi(id);
-    return response;
-  }
-);
 
 const initialState: CategoryState = {
   categorys: [],

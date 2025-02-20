@@ -6,10 +6,10 @@ import stayles from '@/app/ui/Table/Table.module.css';
 import stylesSubMenu from '@/app/ui/SubMenu/SubMenu.module.css';
 import { AppDispatch, RootState } from '../lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCosts } from '../lib/store/reducers/costsSlice';
 import LoaderPage from '../ui/loaders/Loader__page';
 import { ICostAndIncome } from '../lib/store/models/ICostAndIncome';
 import { useRouter } from 'next/navigation';
+import { fetchCosts } from '../lib/store/api/costs';
 
 export default function Costs() {
   const router = useRouter();

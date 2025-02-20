@@ -1,6 +1,8 @@
 import React from 'react';
 import stayles from '@/app/ui/Table/Table.module.css';
 import { ICostAndIncome } from '@/app/lib/store/models/ICostAndIncome';
+import { formatDate } from '@/app/lib/utils/date';
+import { formatSumm } from '@/app/lib/utils/formatSumm';
 
 interface ITableProps {
   data: ICostAndIncome[];
@@ -8,22 +10,6 @@ interface ITableProps {
 }
 
 const Table = ({ data, handleClickItem }: ITableProps) => {
-  const formatNumber = (number: number) => {
-    return number.toLocaleString('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-    });
-  };
-
-  const formatDate = (dateString: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: '2-digit',
-      year: '2-digit',
-    };
-    return new Date(dateString).toLocaleDateString('ru-RU', options);
-  };
-
   const groupedData = data.reduce(
     (acc, item) => {
       const date = formatDate(item.create_time);
@@ -60,7 +46,7 @@ const Table = ({ data, handleClickItem }: ITableProps) => {
                 <tr key={item.id} onClick={() => handleClickItem(item)}>
                   <td>{item.account}</td>
                   <td className={stayles.number}>
-                    {formatNumber(Number(item.sum))}
+                    {formatSumm(Number(item.sum))}
                   </td>
                   <td>{item.category}</td>
                   <td>{item.sub_category}</td>

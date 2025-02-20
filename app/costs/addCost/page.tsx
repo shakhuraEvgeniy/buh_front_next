@@ -1,17 +1,17 @@
 'use client';
 import { useEffect } from 'react';
-import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
+import { useFormWithValidation } from '@/app/lib/hooks/useFormWithValidation';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
-import { getCurrentDateTime } from '@/app/utils/getDate';
+import { getCurrentDateTime } from '@/app/lib/utils/date';
 import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 import {
   fetchCategorysCost,
   fetchSubCategorysCost,
-} from '@/app/lib/store/reducers/costCategorySlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
-import { fetchAddCost } from '@/app/lib/store/reducers/costsSlice';
+} from '@/app/lib/store/api/categorys';
+import { fetchAddCost } from '@/app/lib/store/api/costs';
 
 export default function AddCosts() {
   const router = useRouter();

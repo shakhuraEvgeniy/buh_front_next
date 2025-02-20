@@ -4,18 +4,15 @@ import { AppDispatch, RootState } from '@/app/lib/store/store';
 import FormAddCostAndIncome from '@/app/ui/addItemForm/addItemForm';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentDateTime } from '@/app/utils/getDate';
+import { getCurrentDateTime } from '@/app/lib/utils/date';
+import { useFormWithValidation } from '@/app/lib/hooks/useFormWithValidation';
+import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+import { fetchAccounts } from '@/app/lib/store/api/accounts';
 import {
   fetchCategorysCost,
   fetchSubCategorysCost,
-} from '@/app/lib/store/reducers/costCategorySlice';
-import { useFormWithValidation } from '@/app/hooks/useFormWithValidation';
-import {
-  fetchDeleteCost,
-  fetchUpdateCost,
-} from '@/app/lib/store/reducers/costsSlice';
-import { fetchAccounts } from '@/app/lib/store/reducers/accountSlice';
-import styles from '@/app/ui/addItemForm/addItemForm.module.css';
+} from '@/app/lib/store/api/categorys';
+import { fetchDeleteCost, fetchUpdateCost } from '@/app/lib/store/api/costs';
 
 type Params = Promise<{ id: string }>;
 

@@ -1,18 +1,12 @@
 import stayles from '@/app/ui/Table/Table.module.css';
 import { IAccount, IAccounts } from '../lib/store/models/IAccount';
+import { formatSumm } from '../lib/utils/formatSumm';
 
 interface accountsProps {
   data: IAccounts;
 }
 
 const TableAccounts = ({ data }: accountsProps) => {
-  const formatNumber = (number: number) => {
-    return number.toLocaleString('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-    });
-  };
-
   return (
     <>
       <table className={stayles.table}>
@@ -30,7 +24,7 @@ const TableAccounts = ({ data }: accountsProps) => {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td className={stayles.number}>
-                    {formatNumber(Number(item.current_sum))}
+                    {formatSumm(Number(item.current_sum))}
                   </td>
                   <td>{item.comment}</td>
                 </tr>
@@ -43,9 +37,7 @@ const TableAccounts = ({ data }: accountsProps) => {
               <th scope="row" colSpan={1}>
                 Итого на всех счетах:
               </th>
-              <td className={stayles.number}>
-                {formatNumber(Number(data.sum))}
-              </td>
+              <td className={stayles.number}>{formatSumm(Number(data.sum))}</td>
             </tr>
           )}
         </tfoot>
