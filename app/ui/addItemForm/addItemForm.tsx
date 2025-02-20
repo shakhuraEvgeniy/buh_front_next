@@ -3,7 +3,7 @@ import { IAccount } from '@/app/lib/store/models/IAccount';
 import { ICategory } from '@/app/lib/store/models/ICategory';
 import styles from '@/app/ui/addItemForm/addItemForm.module.css';
 import LoaderButton from '../loaders/Loader__button';
-import { formatSumm } from '@/app/lib/utils/formatSumm';
+// import { formatSumm } from '@/app/lib/utils/formatSumm';
 
 interface FormAddCostAndIncomeProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -45,8 +45,8 @@ export default function FormAddCostAndIncome({
   isLoading,
   children,
 }: FormAddCostAndIncomeProps) {
-  const accountSum = formatSumm(Number(accounts[values.accountId].current_sum));
-
+  // const sum: number = accounts[values.accountId].current_sum
+  // const accountSum: string = formatSumm(Number(sum));
   return (
     <div className={styles.form}>
       <h2 className={styles.title}>{title}</h2>
@@ -79,9 +79,9 @@ export default function FormAddCostAndIncome({
           </select>
         </label>
 
-        <label className={`${styles.label} ${styles['label_sum']}`}>
+        {/* <label className={`${styles.label} ${styles['label_sum']}`}>
           Остаток на счете: {accountSum}
-        </label>
+        </label> */}
 
         <label className={styles.label}>
           Сумма:
