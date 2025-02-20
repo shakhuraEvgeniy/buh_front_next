@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccounts, fetchTransfer } from '@/app/lib/store/api/accounts';
+import { formatSumm } from '@/app/lib/utils/formatSumm';
 
 export default function Transfer() {
   const router = useRouter();
@@ -42,6 +43,13 @@ export default function Transfer() {
     router.push('/accounts');
   };
 
+  const startAccountSum = formatSumm(
+    Number(accounts.accounts[values.startIdAccount].current_sum)
+  );
+  const finishAccountSum = formatSumm(
+    Number(accounts.accounts[values.finishIdAccount].current_sum)
+  );
+
   return (
     <div className={styles.form}>
       <h2 className={styles.title}>Перенос средств</h2>
@@ -63,6 +71,10 @@ export default function Transfer() {
           </select>
         </label>
 
+        <label className={`${styles.label} ${styles['label_sum']}`}>
+          Остаток на счете: {startAccountSum}
+        </label>
+
         <label className={styles.label}>
           Счет назначения:
           <select
@@ -78,6 +90,10 @@ export default function Transfer() {
               </option>
             ))}
           </select>
+        </label>
+
+        <label className={`${styles.label} ${styles['label_sum']}`}>
+          Остаток на счете: {finishAccountSum}
         </label>
 
         <label className={styles.label}>
