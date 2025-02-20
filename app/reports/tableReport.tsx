@@ -11,7 +11,6 @@ interface recordProps {
 }
 
 const TableReport = ({ data, title }: recordProps) => {
-
   const chartData = {
     labels: data.categorys.map((item: IItemReports) => item.category),
     datasets: [

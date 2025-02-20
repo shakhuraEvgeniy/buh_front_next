@@ -7,7 +7,6 @@ interface accountsProps {
 }
 
 const TableAccounts = ({ data }: accountsProps) => {
-
   return (
     <>
       <table className={stayles.table}>
@@ -38,9 +37,7 @@ const TableAccounts = ({ data }: accountsProps) => {
               <th scope="row" colSpan={1}>
                 Итого на всех счетах:
               </th>
-              <td className={stayles.number}>
-                {formatSumm(Number(data.sum))}
-              </td>
+              <td className={stayles.number}>{formatSumm(Number(data.sum))}</td>
             </tr>
           )}
         </tfoot>

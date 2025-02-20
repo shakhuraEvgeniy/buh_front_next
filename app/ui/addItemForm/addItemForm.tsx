@@ -146,7 +146,7 @@ export default function FormAddCostAndIncome({
         </button>
         <button
           className={`${styles.button} ${styles['button_cansel']}`}
-          onClick={handleCancel}
+          onClick={(event) => handleCancel(event)}
         >
           Отменить
         </button>

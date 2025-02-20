@@ -10,7 +10,6 @@ interface ITableProps {
 }
 
 const Table = ({ data, handleClickItem }: ITableProps) => {
-
   const groupedData = data.reduce(
     (acc, item) => {
       const date = formatDate(item.create_time);

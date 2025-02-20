@@ -4,10 +4,12 @@ import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import stayles from '@/app/ui/Table/Table.module.css';
+import stylesSubMenu from '@/app/ui/SubMenu/SubMenu.module.css';
 import { IRefund } from '@/app/lib/store/models/IReceivables';
 import { formatDate } from '@/app/lib/utils/date';
 import { formatSumm } from '@/app/lib/utils/formatSumm';
 import { fetchGetRufunds } from '@/app/lib/store/api/receivables';
+import Link from 'next/link';
 
 type Params = Promise<{ id: string }>;
 
@@ -24,6 +26,11 @@ export default function RefundsList(props: { params: Params }) {
 
   return (
     <>
+      <div className={stylesSubMenu.subMenu}>
+        <Link className={stayles.link} href={`/receivables/${id}/addRefund`}>
+          <button className={stayles.addButton}>Добавить возврат</button>
+        </Link>
+      </div>
       <table className={stayles.table}>
         <thead>
           <tr>

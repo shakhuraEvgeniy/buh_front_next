@@ -1,4 +1,5 @@
 import {
+  fetchAddRufund,
   fetchGetRufunds,
   fetchReceivables,
 } from '@/app/lib/store/api/receivables';
@@ -35,7 +36,7 @@ export const receivablesSlice = createSlice({
       })
       .addCase(fetchReceivables.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Failed to fetch receivables';
+        state.error = action.error.message || 'Failed to fetch get receivables';
       })
       .addCase(fetchGetRufunds.pending, (state) => {
         state.isLoading = true;
@@ -47,7 +48,18 @@ export const receivablesSlice = createSlice({
       })
       .addCase(fetchGetRufunds.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Failed to fetch refunds';
+        state.error = action.error.message || 'Failed to fetch get refunds';
+      })
+      .addCase(fetchAddRufund.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchAddRufund.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchAddRufund.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to fetch add refunds';
       });
   },
 });
