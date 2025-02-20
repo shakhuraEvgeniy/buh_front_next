@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/app/lib/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccounts, fetchTransfer } from '@/app/lib/store/api/accounts';
-import { formatSumm } from '@/app/lib/utils/formatSumm';
+// import { formatSumm } from '@/app/lib/utils/formatSumm';
 
 export default function Transfer() {
   const router = useRouter();
@@ -43,12 +43,15 @@ export default function Transfer() {
     router.push('/accounts');
   };
 
-  const startAccountSum = formatSumm(
-    Number(accounts.accounts[values.startIdAccount].current_sum)
-  );
-  const finishAccountSum = formatSumm(
-    Number(accounts.accounts[values.finishIdAccount].current_sum)
-  );
+  // const startAccountSum: number = accounts.accounts[values.startIdAccount].current_sum
+  // const finishAccountSum: number = accounts.accounts[values.finishIdAccount].current_sum
+
+  // const startAccountSumString: string = formatSumm(
+  //   Number(startAccountSum)
+  // );
+  // const finishAccountSumString: string = formatSumm(
+  //   Number(finishAccountSum)
+  // );
 
   return (
     <div className={styles.form}>
@@ -70,10 +73,10 @@ export default function Transfer() {
             ))}
           </select>
         </label>
-
+        {/* 
         <label className={`${styles.label} ${styles['label_sum']}`}>
-          Остаток на счете: {startAccountSum}
-        </label>
+          Остаток на счете: {startAccountSumString}
+        </label> */}
 
         <label className={styles.label}>
           Счет назначения:
@@ -91,10 +94,10 @@ export default function Transfer() {
             ))}
           </select>
         </label>
-
+        {/* 
         <label className={`${styles.label} ${styles['label_sum']}`}>
-          Остаток на счете: {finishAccountSum}
-        </label>
+          Остаток на счете: {finishAccountSumString}
+        </label> */}
 
         <label className={styles.label}>
           Сумма:
